@@ -17,38 +17,38 @@ const routes = [
   },
   {
     meta: {
-      title: 'Tables'
+      title: 'Members'
     },
-    path: '/tables',
+    path: '/members/:guid',
     name: 'tables',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "tables" */ '../views/Tables.vue')
+    component: () => import(/* webpackChunkName: "members" */ '../views/Members.vue')
   },
   {
     meta: {
-      title: 'Forms'
+      title: 'Treasury'
     },
-    path: '/forms',
-    name: 'forms',
-    component: () => import(/* webpackChunkName: "forms" */ '../views/Forms.vue')
+    path: '/treasury/:guid',
+    name: 'Treasury',
+    component: () => import(/* webpackChunkName: "treasury" */ '../views/Treasury.vue')
   },
   {
     meta: {
-      title: 'Profile'
+      title: 'Stash'
     },
-    path: '/profile',
-    name: 'profile',
-    component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue')
+    path: '/stash/:guid',
+    name: 'Stash',
+    component: () => import(/* webpackChunkName: "stash" */ '../views/Stash.vue')
   },
   {
     meta: {
-      title: 'New Client'
+      title: 'Logs'
     },
-    path: '/client/new',
-    name: 'client.new',
-    component: () => import(/* webpackChunkName: "client-form" */ '../views/ClientForm.vue')
+    path: '/logs/:guid',
+    name: 'Logs',
+    component: () => import(/* webpackChunkName: "logs" */ '../views/Logs.vue')
   },
   {
     meta: {

@@ -10,8 +10,8 @@
           class="tile is-child"
           type="is-primary"
           icon="account-multiple"
-          :number="512"
-          label="Clients"
+          :number="887"
+          label="Members"
         />
         <card-widget
           class="tile is-child"
@@ -19,7 +19,7 @@
           icon="cart-outline"
           :number="7770"
           prefix="$"
-          label="Sales"
+          label="Guild Funds"
         />
         <card-widget
           class="tile is-child"
@@ -49,7 +49,7 @@
         </div>
       </card-component>
 
-      <card-component title="Clients" class="has-table has-mobile-sort-spaced">
+      <card-component title="New Members" class="has-table has-mobile-sort-spaced">
         <clients-table-sample
           :data-url="`${$router.options.base}data-sources/clients.json`"
         />
@@ -89,7 +89,7 @@ export default {
   },
   computed: {
     titleStack () {
-      return ['Admin', 'Dashboard']
+      return ['TINY', 'Dashboard']
     }
   },
   mounted () {

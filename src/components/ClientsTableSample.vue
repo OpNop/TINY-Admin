@@ -14,7 +14,7 @@
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="name"
+      default-sort="account"
       :data="clients"
     >
       <template slot-scope="props">
@@ -22,16 +22,16 @@
           <div class="image">
             <img
               :src="props.row.avatar"
-              :alt="props.row.name"
+              :alt="props.row.account"
               class="is-rounded"
             />
           </div>
         </b-table-column>
-        <b-table-column label="Name" field="name" sortable>
-          {{ props.row.name }}
+        <b-table-column label="Account" field="account" sortable>
+          {{ props.row.account }}
         </b-table-column>
-        <b-table-column label="Company" field="company" sortable>
-          {{ props.row.company }}
+        <b-table-column label="Guild" field="guild" sortable>
+          {{ props.row.guild }}
         </b-table-column>
         <b-table-column label="City" field="city" sortable>
           {{ props.row.city }}

@@ -2,7 +2,7 @@
   <div id="app">
     <nav-bar />
     <aside-menu :menu="menu" />
-    <router-view />
+    <router-view class="content" />
     <footer-bar />
   </div>
 </template>
@@ -29,53 +29,89 @@ export default {
             to: '/',
             icon: 'desktop-mac',
             label: 'Dashboard'
+          },
+          {
+            to: '/recruits',
+            icon: 'account-plus',
+            label: 'Recruits'
+          },
+          {
+            to: '/ban',
+            icon: 'account-cancel',
+            label: 'Ban List'
           }
         ],
-        'Examples',
+        'Guilds',
         [
           {
-            to: '/tables',
-            label: 'Tables',
-            icon: 'table',
-            updateMark: true
-          },
-          {
-            to: '/forms',
-            label: 'Forms',
-            icon: 'square-edit-outline'
-          },
-          {
-            to: '/profile',
-            label: 'Profile',
-            icon: 'account-circle'
-          },
-          {
-            label: 'Submenus',
-            subLabel: 'Submenus Example',
-            icon: 'view-list',
+            // to: '/tables',
+            label: 'Pewpew\'s Army',
+            icon: 'account-group',
+            // updateMark: true,
             menu: [
               {
-                href: '#void',
-                label: 'Sub-item One'
+                to: '/members/BA7EC8EA-6B52-E811-81A8-90824340DEC8',
+                label: 'Members'
               },
               {
-                href: '#void',
-                label: 'Sub-item Two'
+                to: '/treasury/BA7EC8EA-6B52-E811-81A8-90824340DEC8',
+                label: 'Treasury'
+              },
+              {
+                to: '/stash/BA7EC8EA-6B52-E811-81A8-90824340DEC8',
+                label: 'Stash'
+              },
+              {
+                to: 'logs/members/BA7EC8EA-6B52-E811-81A8-90824340DEC8',
+                label: 'Logs'
               }
             ]
-          }
-        ],
-        'About',
-        [
-          {
-            href: 'https://admin-one.justboil.me',
-            label: 'Premium Demo',
-            icon: 'credit-card'
           },
           {
-            href: 'https://justboil.me/bulma-admin-template/one',
-            label: 'About',
-            icon: 'help-circle'
+            // to: '/forms',
+            label: 'Taimi\'s Army',
+            icon: 'account-group',
+            menu: [
+              {
+                to: '/members/0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE',
+                label: 'Members'
+              },
+              {
+                to: '/treasury/0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE',
+                label: 'Treasury'
+              },
+              {
+                to: '/stash/0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE',
+                label: 'Stash'
+              },
+              {
+                to: 'logs/members/0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE',
+                label: 'Logs'
+              }
+            ]
+          },
+          {
+            // to: '/profile',
+            label: 'Sam\'s Army',
+            icon: 'account-group',
+            menu: [
+              {
+                to: '/members/7D0DB7CC-02FE-E911-81AA-A77AA130EAB8',
+                label: 'Members'
+              },
+              {
+                to: '/treasury/7D0DB7CC-02FE-E911-81AA-A77AA130EAB8',
+                label: 'Treasury'
+              },
+              {
+                to: '/stash/7D0DB7CC-02FE-E911-81AA-A77AA130EAB8',
+                label: 'Stash'
+              },
+              {
+                to: 'logs/members/7D0DB7CC-02FE-E911-81AA-A77AA130EAB8',
+                label: 'Logs'
+              }
+            ]
           }
         ]
       ]
