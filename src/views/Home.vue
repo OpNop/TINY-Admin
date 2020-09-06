@@ -17,17 +17,17 @@
           class="tile is-child"
           type="is-info"
           icon="cart-outline"
-          :number="7770"
-          prefix="$"
+          :number="132488"
           label="Guild Funds"
+          isGold="true"
         />
         <card-widget
           class="tile is-child"
           type="is-success"
           icon="chart-timeline-variant"
           :number="256"
-          suffix="%"
-          label="Performance"
+          suffix=" Ankles(s)"
+          label="Bookah Ankles Stabbed"
         />
       </tiles>
 
