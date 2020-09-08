@@ -4,8 +4,10 @@ I figure I'll just post here what API endpoints are working here
 ### Endpoints
 Base url: https://api.tinyarmy.org/
 - /v1/ping
-- /v1/auth/login
-- /v1/guild
+- /v1/auth/ (dead root endpoint)
+  - /v1/auth/login `POST`
+  - /v1/auth/refresh_token `POST`
+- /v1/guild (dead root endpoint)
   - /v1/guild/log  (Params: type, limit, page)
   - /v1/guild/:id/log (params: same as /v1/guild/log)
   - /v1/guild/:id/members
