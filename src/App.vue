@@ -2,7 +2,7 @@
   <div id="app">
     <nav-bar />
     <aside-menu :menu="menu" />
-    <router-view class="content" />
+    <router-view :key="$route.fullPath" />
     <footer-bar />
   </div>
 </template>
@@ -62,7 +62,7 @@ export default {
                 label: 'Stash'
               },
               {
-                to: 'logs/members/BA7EC8EA-6B52-E811-81A8-90824340DEC8',
+                to: '/logs/BA7EC8EA-6B52-E811-81A8-90824340DEC8',
                 label: 'Logs'
               }
             ]
@@ -85,7 +85,7 @@ export default {
                 label: 'Stash'
               },
               {
-                to: 'logs/members/0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE',
+                to: '/logs/0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE',
                 label: 'Logs'
               }
             ]
@@ -108,7 +108,7 @@ export default {
                 label: 'Stash'
               },
               {
-                to: 'logs/members/7D0DB7CC-02FE-E911-81AA-A77AA130EAB8',
+                to: '/logs/7D0DB7CC-02FE-E911-81AA-A77AA130EAB8',
                 label: 'Logs'
               }
             ]

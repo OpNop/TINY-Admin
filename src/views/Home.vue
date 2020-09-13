@@ -19,14 +19,14 @@
           icon="cart-outline"
           :number="132488"
           label="Guild Funds"
-          isGold="true"
+          isGold
         />
         <card-widget
           class="tile is-child"
           type="is-success"
           icon="chart-timeline-variant"
           :number="256"
-          suffix=" Ankles(s)"
+          suffix="Ankles(s)"
           label="Bookah Ankles Stabbed"
         />
       </tiles>
