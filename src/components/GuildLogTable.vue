@@ -1,22 +1,27 @@
 <template>
   <div>
-    <modal-box
-      :is-active="isModalActive"
-      :trash-object-name="trashObjectName"
-      @confirm="trashConfirm"
-      @cancel="trashCancel"
-    />
+    <b-field grouped group-multiline>
+          <b-select v-model="perPage" @input="onPerPageChanged">
+            <option value="5">5 per page</option>
+            <option value="10">10 per page</option>
+            <option value="15">15 per page</option>
+            <option value="20">20 per page</option>
+          </b-select>
+        </b-field>
     <b-table
       :checked-rows.sync="checkedRows"
       :checkable="checkable"
       :loading="isLoading"
-      :paginated="paginated"
+      paginated
+      backend-pagination
+      :total="ResultTotal"
       :per-page="perPage"
+      @page-change="onPageChange"
       :striped="true"
       :hoverable="true"
       default-sort="date"
       default-sort-direction="desc"
-      :data="clients"
+      :data="logs"
     >
       <template slot-scope="props">
         <b-table-column label="Message" field="message" width="auto">
@@ -52,11 +57,9 @@
 
 <script>
 import axios from 'axios'
-import ModalBox from '@/components/ModalBox'
 
 export default {
   name: 'GuildLogTable',
-  components: { ModalBox },
   props: {
     dataUrl: {
       type: String,
@@ -69,62 +72,63 @@ export default {
   },
   data () {
     return {
-      isModalActive: false,
-      trashObject: null,
-      clients: [],
+      PageTotal: 0,
+      PageSize: 0,
+      ResultCount: 0,
+      ResultTotal: 0,
+      logs: [],
       isLoading: false,
-      paginated: false,
-      perPage: 20,
+      page: 1,
+      perPage: 5,
       checkedRows: []
     }
   },
-  computed: {
-    trashObjectName () {
-      if (this.trashObject) {
-        return this.trashObject.name
+  methods: {
+    loadLogsAsync() {
+      let params = [
+        `limit=${this.perPage}`,
+        `page=${this.page}`
+      ]
+      if(this.account !== undefined){
+        params.push(`account=${this.account}`)
       }
-
-      return null
-    }
-  },
-  mounted () {
-    if (this.dataUrl) {
+      if(this.type !== undefined){
+        params.push(`account=${this.type}`)  
+      }
+      params = params.join('&')
       this.isLoading = true
       axios
-        .get(this.dataUrl)
+        .get(`${this.dataUrl}?${params}`)
         .then((r) => {
-          this.isLoading = false
-          if (r.data) {
-            if (r.data.length > this.perPage) {
-              this.paginated = true
-            }
-            this.clients = r.data
+          if(r.data) {
+            this.PageTotal = r.data.PageTotal
+            this.PageSize = r.data.PageSize
+            this.ResultCount = r.data.ResultCount
+            this.ResultTotal = r.data.ResultTotal
+            this.logs = r.data.logs
+            this.isLoading = false
           }
         })
-        .catch((e) => {
+        .catch((error) => {
+          this.PageTotal = 0
+          this.PageSize = 0
+          this.ResultCount = 0
+          this.ResultTotal = 0
+          this.logs = []
           this.isLoading = false
-          this.$buefy.toast.open({
-            message: `Error: ${e.message}`,
-            type: 'is-danger'
-          })
         })
+    },
+    onPageChange(page) {
+      this.page = page
+      this.loadLogsAsync()
+    },
+    onPerPageChanged(perPage) {
+      this.perPage = perPage
+      this.loadLogsAsync()
     }
   },
-  methods: {
-    trashModal (trashObject) {
-      this.trashObject = trashObject
-      this.isModalActive = true
-    },
-    trashConfirm () {
-      this.isModalActive = false
-      this.$buefy.snackbar.open({
-        message: 'Confirmed',
-        queue: false
-      })
-    },
-    trashCancel () {
-      this.isModalActive = false
-    }
+  mounted() {
+    this.loadLogsAsync()
   }
 }
 </script>

@@ -7,10 +7,10 @@
     <section class="section is-main-section">
       <card-component
         class="has-table has-mobile-sort-spaced" 
-        title="Clients" 
-        icon="account-multiple">
+        title="Log Entries" 
+        icon="format-list-bulleted-square">
         <guild-log-table 
-            :data-url="`https://api.tinyarmy.org/v1/guild/${$route.params.guid}/log?limit=9999`" 
+            :data-url="`https://api.tinyarmy.org/v1/guild/${$route.params.guid}/log`" 
             :checkable="true" />
       </card-component>
     </section>
