@@ -1,16 +1,16 @@
 <template>
   <div>
-    <b-field grouped group-multiline>
-          <b-select v-model="perPage" @input="onPerPageChanged">
-            <option value="5">5 per page</option>
-            <option value="10">10 per page</option>
-            <option value="15">15 per page</option>
-            <option value="20">20 per page</option>
-          </b-select>
-        </b-field>
+    <!-- <b-field grouped group-multiline>
+      <b-select v-model="perPage" @input="onPerPageChanged">
+        <option value="5">5 per page</option>
+        <option value="10">10 per page</option>
+        <option value="15">15 per page</option>
+        <option value="20">20 per page</option>
+        <option value="25">25 per page</option>
+      </b-select>
+    </b-field> -->
     <b-table
       :checked-rows.sync="checkedRows"
-      :checkable="checkable"
       :loading="isLoading"
       paginated
       backend-pagination
@@ -64,13 +64,9 @@ export default {
     dataUrl: {
       type: String,
       default: null
-    },
-    checkable: {
-      type: Boolean,
-      default: false
     }
   },
-  data () {
+  data() {
     return {
       PageTotal: 0,
       PageSize: 0,
@@ -79,28 +75,25 @@ export default {
       logs: [],
       isLoading: false,
       page: 1,
-      perPage: 5,
+      perPage: 20,
       checkedRows: []
     }
   },
   methods: {
     loadLogsAsync() {
-      let params = [
-        `limit=${this.perPage}`,
-        `page=${this.page}`
-      ]
-      if(this.account !== undefined){
+      let params = [`limit=${this.perPage}`, `page=${this.page}`]
+      if (this.account !== undefined) {
         params.push(`account=${this.account}`)
       }
-      if(this.type !== undefined){
-        params.push(`account=${this.type}`)  
+      if (this.type !== undefined) {
+        params.push(`account=${this.type}`)
       }
       params = params.join('&')
       this.isLoading = true
       axios
         .get(`${this.dataUrl}?${params}`)
-        .then((r) => {
-          if(r.data) {
+        .then(r => {
+          if (r.data) {
             this.PageTotal = r.data.PageTotal
             this.PageSize = r.data.PageSize
             this.ResultCount = r.data.ResultCount
@@ -109,7 +102,7 @@ export default {
             this.isLoading = false
           }
         })
-        .catch((error) => {
+        .catch(error => {
           this.PageTotal = 0
           this.PageSize = 0
           this.ResultCount = 0
