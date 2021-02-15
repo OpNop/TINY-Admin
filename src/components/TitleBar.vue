@@ -10,18 +10,9 @@
           </ul>
         </div>
       </div>
-      <div class="level-right">
+      <div v-show="hasRightVisible" class="level-right">
         <div class="level-item">
-          <div class="buttons is-right">
-            <a
-              href="https://admin-one.justboil.me/"
-              target="_blank"
-              class="button is-primary"
-            >
-              <b-icon icon="credit-card" custom-size="default" />
-              <span>Premium Demo</span>
-            </a>
-          </div>
+          <slot name="right" />
         </div>
       </div>
     </div>
@@ -35,6 +26,10 @@ export default {
     titleStack: {
       type: Array,
       default: () => []
+    },
+    hasRightVisible: {
+      type: Boolean,
+      default: true
     }
   }
 }

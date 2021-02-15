@@ -1,9 +1,6 @@
 <template>
   <div>
-    <title-bar :title-stack="titleStack" />
-    <hero-bar :has-right-visible="false">
-      Dashboard
-    </hero-bar>
+    <title-bar :title-stack="titleStack" :has-right-visible="false" />
     <section class="section is-main-section">
       <tiles>
         <card-widget
@@ -62,7 +59,6 @@
 // @ is an alias to /src
 import * as chartConfig from '@/components/Charts/chart.config'
 import TitleBar from '@/components/TitleBar'
-import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import CardWidget from '@/components/CardWidget'
 import CardComponent from '@/components/CardComponent'
@@ -76,7 +72,6 @@ export default {
     CardComponent,
     CardWidget,
     Tiles,
-    HeroBar,
     TitleBar
   },
   data () {
