@@ -1,14 +1,20 @@
 <template>
   <div id="app">
-    <nav-bar />
-    <aside-menu :menu="menu" />
-    <router-view :key="$route.fullPath" />
-    <footer-bar />
+    <div v-if="this.$router.currentRoute.name !== 'login'">
+      <nav-bar />
+      <aside-menu :menu="menu" />
+      <router-view :key="$route.fullPath" />
+      <footer-bar />
+    </div>
+    <div v-if="this.$router.currentRoute.name == 'login'">
+      <router-view class="login" />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import axios from 'axios'
 import NavBar from '@/components/NavBar'
 import AsideMenu from '@/components/AsideMenu'
 import FooterBar from '@/components/FooterBar'
@@ -162,12 +168,8 @@ export default {
       ]
     }
   },
-  created() {
-    this.$store.commit('user', {
-      name: 'John Doe',
-      email: 'john@example.com',
-      avatar: 'https://avatars.dicebear.com/v2/gridy/John-Doe.svg'
-    })
+  created () {
+    axios.defaults.headers.common['Authorization'] = this.$store.state.token;
   }
 }
 </script>

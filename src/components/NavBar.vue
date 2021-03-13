@@ -74,7 +74,8 @@ export default {
   },
   data () {
     return {
-      isMenuNavBarActive: false
+      isMenuNavBarActive: false,
+      userName: this.$store.getters.currentUser
     }
   },
   computed: {
@@ -84,7 +85,7 @@ export default {
     menuToggleMobileIcon () {
       return this.isAsideMobileExpanded ? 'backburger' : 'forwardburger'
     },
-    ...mapState(['isNavBarVisible', 'isAsideMobileExpanded', 'userName'])
+    ...mapState(['isNavBarVisible', 'isAsideMobileExpanded'])
   },
   methods: {
     menuToggleMobile () {

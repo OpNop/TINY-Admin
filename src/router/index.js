@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../views/Home.vue'
+import Login from '../components/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -9,7 +11,8 @@ const routes = [
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
-      title: 'Dashboard'
+      title: 'Dashboard',
+      requiresAuth: true
     },
     path: '/',
     name: 'home',
@@ -17,7 +20,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Members'
+      title: 'Members',
+      requiresAuth: true
     },
     path: '/members/:guid',
     name: 'tables',
@@ -28,7 +32,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Treasury'
+      title: 'Treasury',
+      requiresAuth: true
     },
     path: '/treasury/:guid',
     name: 'Treasury',
@@ -36,7 +41,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Stash'
+      title: 'Stash',
+      requiresAuth: true
     },
     path: '/stash/:guid',
     name: 'Stash',
@@ -44,7 +50,8 @@ const routes = [
   },
   {
     meta: {
-      title: 'Logs'
+      title: 'Logs',
+      requiresAuth: true
     },
     path: '/logs/:guid',
     name: 'Logs',
@@ -52,13 +59,19 @@ const routes = [
   },
   {
     meta: {
-      title: 'View Member'
+      title: 'View Member',
+      requiresAuth: true
     },
     path: '/member/:account',
     name: 'member.view',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/ClientForm.vue'),
     props: true
-  }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+  },
 ]
 
 const router = new VueRouter({
@@ -70,6 +83,18 @@ const router = new VueRouter({
     } else {
       return { x: 0, y: 0 }
     }
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login') 
+  } else {
+    next() 
   }
 })
 
