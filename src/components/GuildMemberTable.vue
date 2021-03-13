@@ -1,14 +1,5 @@
 <template>
   <div>
-    <!-- <b-field grouped group-multiline>
-      <b-select v-model="perPage" @input="onPerPageChanged">
-        <option value="5">5 per page</option>
-        <option value="10">10 per page</option>
-        <option value="15">15 per page</option>
-        <option value="20">20 per page</option>
-        <option value="25">25 per page</option>
-      </b-select>
-    </b-field> -->
     <b-table
       :checked-rows.sync="checkedRows"
       :loading="isLoading"
@@ -16,17 +7,49 @@
       :hoverable="true"
       default-sort="joined"
       default-sort-direction="asc"
-      :data="logs"
+      :data="members"
     >
       <template slot-scope="props">
-        <b-table-column label="Account" field="name" width="auto">
-          {{ props.row.name }}
+        <b-table-column class="has-no-head-mobile is-image-cell" v-if="showGuild">
+           <div class="image">
+            <img
+              :src="'https://emblem.werdes.net/emblem/' + props.row.guild_guid"
+              :alt="props.row.name"
+            />
+          </div>
         </b-table-column>
-        <b-table-column label="Rank" field="rank" sortable>
-          {{ props.row.rank }}
+        <b-table-column label="Account" field="account" width="auto">
+          <router-link
+              :to="{ name: 'member.view', params: { account: props.row.account } }"
+            >
+            {{ props.row.account }}
+          </router-link>
         </b-table-column>
-        <b-table-column label="Date Joined" field="joined" sortable>
-          {{ props.row.joined }}
+        <b-table-column label="Guild" field="name" v-if="showGuild">
+          {{ props.row.guild_name }}
+        </b-table-column>
+        <b-table-column label="Rank" field="guild_rank" sortable>
+          {{ props.row.guild_rank }}
+        </b-table-column>
+        <b-table-column label="Date Joined" field="date_joined" sortable>
+          {{ props.row.date_joined }}
+        </b-table-column>
+        <b-table-column custom-key="actions" class="is-actions-cell">
+          <div class="buttons is-right">
+            <router-link
+              :to="{ name: 'member.view', params: { account: props.row.account } }"
+              class="button is-small is-primary"
+            >
+              <b-icon icon="account-edit" size="is-small" />
+            </router-link>
+            <button
+              class="button is-small is-danger"
+              type="button"
+              @click.prevent="trashModal(props.row)"
+            >
+              <b-icon icon="trash-can" size="is-small" />
+            </button>
+          </div>
         </b-table-column>
       </template>
 
@@ -42,7 +65,7 @@
             <p>
               <b-icon icon="emoticon-sad" size="is-large" />
             </p>
-            <p>Nothing's here&hellip;</p>
+            <p>Nothing's here&hellip;</p> 
           </template>
         </div>
       </section>
@@ -59,6 +82,10 @@ export default {
     dataUrl: {
       type: String,
       default: null
+    },
+    showGuild: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -67,7 +94,7 @@ export default {
       PageSize: 0,
       ResultCount: 0,
       ResultTotal: 0,
-      logs: [],
+      members: [],
       isLoading: false,
       page: 1,
       perPage: 20,
@@ -75,7 +102,7 @@ export default {
     }
   },
   methods: {
-    loadLogsAsync() {
+    loadMembersAsync() {
       let params = [`limit=${this.perPage}`, `page=${this.page}`]
       if (this.account !== undefined) {
         params.push(`account=${this.account}`)
@@ -93,7 +120,7 @@ export default {
             // this.PageSize = r.data.PageSize
             // this.ResultCount = r.data.ResultCount
             // this.ResultTotal = r.data.ResultTotal
-            this.logs = r.data
+            this.members = r.data
             this.isLoading = false
           }
         })
@@ -102,21 +129,21 @@ export default {
           this.PageSize = 0
           this.ResultCount = 0
           this.ResultTotal = 0
-          this.logs = []
+          this.members = []
           this.isLoading = false
         })
     },
     onPageChange(page) {
       this.page = page
-      this.loadLogsAsync()
+      this.loadMembersAsync()
     },
     onPerPageChanged(perPage) {
       this.perPage = perPage
-      this.loadLogsAsync()
+      this.loadMembersAsync()
     }
   },
   mounted() {
-    this.loadLogsAsync()
+    this.loadMembersAsync()
   }
 }
 </script>
