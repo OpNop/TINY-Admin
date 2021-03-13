@@ -23,7 +23,7 @@
           type="is-success"
           icon="chart-timeline-variant"
           :number="256"
-          suffix="Ankles(s)"
+          suffix=" Ankles(s)"
           label="Bookah Ankles Stabbed"
         />
       </tiles>
@@ -47,8 +47,9 @@
       </card-component>
 
       <card-component title="New Members" class="has-table has-mobile-sort-spaced">
-        <clients-table-sample
-          :data-url="`${$router.options.base}data-sources/clients.json`"
+        <guild-member-table
+          :data-url="`https://api.tinyarmy.org/v1/guild/members`"
+          showGuild
         />
       </card-component>
     </section>
@@ -64,9 +65,11 @@ import CardWidget from '@/components/CardWidget'
 import CardComponent from '@/components/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
 import ClientsTableSample from '@/components/ClientsTableSample'
+import GuildMemberTable from '@/components/GuildMemberTable'
 export default {
   name: 'Home',
   components: {
+    GuildMemberTable,
     ClientsTableSample,
     LineChart,
     CardComponent,
@@ -90,10 +93,10 @@ export default {
   mounted () {
     this.fillChartData()
 
-    this.$buefy.snackbar.open({
-      message: 'Welcome back',
-      queue: false
-    })
+    // this.$buefy.snackbar.open({
+    //   message: 'Welcome back',
+    //   queue: false
+    // })
   },
   methods: {
     randomChartData (n) {
