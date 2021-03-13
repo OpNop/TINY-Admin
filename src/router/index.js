@@ -52,10 +52,10 @@ const routes = [
   },
   {
     meta: {
-      title: 'Edit Client'
+      title: 'View Member'
     },
-    path: '/client/:id',
-    name: 'client.edit',
+    path: '/member/:account',
+    name: 'member.view',
     component: () => import(/* webpackChunkName: "client-form" */ '../views/ClientForm.vue'),
     props: true
   }
