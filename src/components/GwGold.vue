@@ -29,7 +29,7 @@ export default {
     gw2() {
       const c = this.newValue % 100,
         s = ~~((this.newValue % 10000) / 100),
-        g = ~~((this.newValue % 1000000) / 10000);
+        g = ~~((this.newValue % 100000000) / 10000);
         return {
           g:g,
           s:s,

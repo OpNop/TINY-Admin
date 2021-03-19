@@ -58,11 +58,11 @@ export default {
             icon: 'desktop-mac',
             label: 'Dashboard'
           },
-          {
-            to: '/recruits',
-            icon: 'account-plus',
-            label: 'Recruits'
-          },
+          // {
+          //   to: '/recruits',
+          //   icon: 'account-plus',
+          //   label: 'Recruits'
+          // },
           {
             to: '/ban',
             icon: 'account-cancel',
@@ -81,14 +81,14 @@ export default {
                 to: `/members/${this.guilds.pew.guid}`,
                 label: 'Members'
               },
-              {
-                to: `/treasury/${this.guilds.pew.guid}`,
-                label: 'Treasury'
-              },
-              {
-                to: `/stash/${this.guilds.pew.guid}`,
-                label: 'Stash'
-              },
+              // {
+              //   to: `/treasury/${this.guilds.pew.guid}`,
+              //   label: 'Treasury'
+              // },
+              // {
+              //   to: `/stash/${this.guilds.pew.guid}`,
+              //   label: 'Stash'
+              // },
               {
                 to: `/logs/${this.guilds.pew.guid}`,
                 label: 'Logs'
@@ -104,14 +104,14 @@ export default {
                 to: `/members/${this.guilds.taimi.guid}`,
                 label: 'Members'
               },
-              {
-                to: `/treasury/${this.guilds.taimi.guid}`,
-                label: 'Treasury'
-              },
-              {
-                to: `/stash/${this.guilds.taimi.guid}`,
-                label: 'Stash'
-              },
+              // {
+              //   to: `/treasury/${this.guilds.taimi.guid}`,
+              //   label: 'Treasury'
+              // },
+              // {
+              //   to: `/stash/${this.guilds.taimi.guid}`,
+              //   label: 'Stash'
+              // },
               {
                 to: `/logs/${this.guilds.taimi.guid}`,
                 label: 'Logs'
@@ -127,14 +127,14 @@ export default {
                 to: `/members/${this.guilds.sam.guid}`,
                 label: 'Members'
               },
-              {
-                to: `/treasury/${this.guilds.sam.guid}`,
-                label: 'Treasury'
-              },
-              {
-                to: `/stash/${this.guilds.sam.guid}`,
-                label: 'Stash'
-              },
+              // {
+              //   to: `/treasury/${this.guilds.sam.guid}`,
+              //   label: 'Treasury'
+              // },
+              // {
+              //   to: `/stash/${this.guilds.sam.guid}`,
+              //   label: 'Stash'
+              // },
               {
                 to: `/logs/${this.guilds.sam.guid}`,
                 label: 'Logs'
@@ -150,14 +150,14 @@ export default {
                 to: `/members/${this.guilds.plorrt.guid}`,
                 label: 'Members'
               },
-              {
-                to: `/treasury/${this.guilds.plorrt.guid}`,
-                label: 'Treasury'
-              },
-              {
-                to: `/stash/${this.guilds.plorrt.guid}`,
-                label: 'Stash'
-              },
+              // {
+              //   to: `/treasury/${this.guilds.plorrt.guid}`,
+              //   label: 'Treasury'
+              // },
+              // {
+              //   to: `/stash/${this.guilds.plorrt.guid}`,
+              //   label: 'Stash'
+              // },
               {
                 to: `/logs/${this.guilds.plorrt.guid}`,
                 label: 'Logs'

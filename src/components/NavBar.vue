@@ -9,7 +9,7 @@
       </a>
       <div class="navbar-item has-control no-left-space-touch">
         <div class="control">
-          <input class="input" placeholder="Search everywhere..." />
+          <!-- <input class="input" placeholder="Search everywhere..." /> -->
         </div>
       </div>
     </div>

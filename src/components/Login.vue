@@ -3,7 +3,15 @@
    <form class="login" @submit.prevent="login">
      <h1>Sign in</h1>
      <label>API Token</label>
-     <input required v-model="token" type="text" placeholder="API Token"/>
+     <v-text-field
+            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required]"
+            :type="show3 ? 'text' : 'password'"
+            name="token"
+            label="API Token"
+            class="input-group--focused"
+            @click:append="show3 = !show3"
+          ></v-text-field>
      <hr/>
      <button type="submit">Login</button>
    </form>

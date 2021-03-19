@@ -7,14 +7,14 @@
           class="tile is-child"
           type="is-primary"
           icon="account-multiple"
-          :number="887"
+          :number="members"
           label="Members"
         />
         <card-widget
           class="tile is-child"
           type="is-info"
           icon="cart-outline"
-          :number="132488"
+          :number="gold"
           label="Guild Funds"
           isGold
         />
@@ -23,12 +23,12 @@
           type="is-success"
           icon="chart-timeline-variant"
           :number="256"
-          suffix=" Ankles(s)"
+          suffix=" Ankle(s)"
           label="Bookah Ankles Stabbed"
         />
       </tiles>
 
-      <card-component
+      <!-- <card-component
         title="Performance"
         icon="finance"
         header-icon="reload"
@@ -44,7 +44,7 @@
           >
           </line-chart>
         </div>
-      </card-component>
+      </card-component> -->
 
       <card-component title="New Members" class="has-table has-mobile-sort-spaced">
         <guild-member-table
@@ -66,6 +66,7 @@ import CardComponent from '@/components/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
 import ClientsTableSample from '@/components/ClientsTableSample'
 import GuildMemberTable from '@/components/GuildMemberTable'
+import axios from 'axios'
 export default {
   name: 'Home',
   components: {
@@ -82,7 +83,9 @@ export default {
       defaultChart: {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain
-      }
+      },
+      members: 0,
+      gold: 0
     }
   },
   computed: {
@@ -91,14 +94,20 @@ export default {
     }
   },
   mounted () {
+    this.loadGuildStatsAsync()
     this.fillChartData()
-
-    // this.$buefy.snackbar.open({
-    //   message: 'Welcome back',
-    //   queue: false
-    // })
   },
   methods: {
+    loadGuildStatsAsync() {
+      axios 
+        .get('https://api.tinyarmy.org/v1/guild/stats')
+        .then(r => {
+          if (r.data) {
+            this.members = r.data.current.members;
+            this.gold = r.data.current.gold;
+          }
+        })
+    },
     randomChartData (n) {
       const data = []
 

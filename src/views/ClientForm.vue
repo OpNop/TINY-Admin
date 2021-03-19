@@ -10,7 +10,7 @@
     <section class="section is-main-section">
       <notification class="is-info">
         <div>
-          <span><b>Demo only.</b> No data will be saved/updated</span>
+          <span><b>Soon ™</b></span>
         </div>
       </notification>
       <tiles>
@@ -162,7 +162,7 @@ export default {
         lastCrumb = 'New client'
       }
 
-      return ['Admin', 'Clients', lastCrumb]
+      return ['Admin', 'Members', this.$route.params.account /*lastCrumb*/]
     },
     heroTitle () {
       if (this.isProfileExists) {

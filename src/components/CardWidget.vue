@@ -23,7 +23,6 @@
 import CardComponent from '@/components/CardComponent'
 import GrowingNumber from '@/components/GrowingNumber'
 import GwGold from '@/components/GwGold'
-console.log(GwGold)
 export default {
   name: 'CardWidget',
   components: { GrowingNumber, CardComponent, GwGold },

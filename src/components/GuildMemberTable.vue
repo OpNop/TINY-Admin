@@ -5,23 +5,38 @@
       :loading="isLoading"
       :striped="true"
       :hoverable="true"
-      default-sort="joined"
-      default-sort-direction="asc"
       :data="members"
+      
+      backend-sorting
+      :default-sort="[sortField, sortOrder]"
+      :default-sort-direction="sortOrder"
+      @sort="onSort"
+      
+      paginated
+      backend-pagination
+      :total="ResultTotal"
+      :per-page="perPage"
+      @page-change="onPageChange"
     >
       <template slot-scope="props">
-        <b-table-column class="has-no-head-mobile is-image-cell" v-if="showGuild">
-           <div class="image">
+        <b-table-column
+          class="has-no-head-mobile is-image-cell"
+          v-if="showGuild"
+        >
+          <div class="image">
             <img
               :src="'https://emblem.werdes.net/emblem/' + props.row.guild_guid"
               :alt="props.row.name"
             />
           </div>
         </b-table-column>
-        <b-table-column label="Account" field="account" width="auto">
+        <b-table-column label="Account" field="account" width="auto" sortable>
           <router-link
-              :to="{ name: 'member.view', params: { account: props.row.account } }"
-            >
+            :to="{
+              name: 'member.view',
+              params: { account: props.row.account },
+            }"
+          >
             {{ props.row.account }}
           </router-link>
         </b-table-column>
@@ -37,7 +52,10 @@
         <b-table-column custom-key="actions" class="is-actions-cell">
           <div class="buttons is-right">
             <router-link
-              :to="{ name: 'member.view', params: { account: props.row.account } }"
+              :to="{
+                name: 'member.view',
+                params: { account: props.row.account },
+              }"
               class="button is-small is-primary"
             >
               <b-icon icon="account-edit" size="is-small" />
@@ -65,7 +83,7 @@
             <p>
               <b-icon icon="emoticon-sad" size="is-large" />
             </p>
-            <p>Nothing's here&hellip;</p> 
+            <p>Nothing's here&hellip;</p>
           </template>
         </div>
       </section>
@@ -98,29 +116,36 @@ export default {
       isLoading: false,
       page: 1,
       perPage: 20,
-      checkedRows: []
+      checkedRows: [],
+      sortField: 'date_joined',
+      sortOrder: 'desc'
     }
   },
   methods: {
     loadMembersAsync() {
-      let params = [`limit=${this.perPage}`, `page=${this.page}`]
-      if (this.account !== undefined) {
-        params.push(`account=${this.account}`)
-      }
-      if (this.type !== undefined) {
-        params.push(`account=${this.type}`)
-      }
-      params = params.join('&')
+      const params = [
+        `limit=${this.perPage}`,
+        `page=${this.page}`,
+        `sort_by=${this.sortField}`,
+        `order_by=${this.sortOrder}`
+      ].join('&');
+      // if (this.account !== undefined) {
+      //   params.push(`account=${this.account}`)
+      // }
+      // if (this.type !== undefined) {
+      //   params.push(`account=${this.type}`)
+      // }
+      // params = params.join('&')
       this.isLoading = true
       axios
-        .get(`${this.dataUrl}`)
+        .get(`${this.dataUrl}?${params}`)
         .then(r => {
           if (r.data) {
-            // this.PageTotal = r.data.PageTotal
-            // this.PageSize = r.data.PageSize
-            // this.ResultCount = r.data.ResultCount
-            // this.ResultTotal = r.data.ResultTotal
-            this.members = r.data
+            this.PageTotal = r.data.PageTotal
+            this.PageSize = r.data.PageSize
+            this.ResultCount = r.data.ResultCount
+            this.ResultTotal = r.data.ResultTotal
+            this.members = r.data.members
             this.isLoading = false
           }
         })
@@ -139,6 +164,11 @@ export default {
     },
     onPerPageChanged(perPage) {
       this.perPage = perPage
+      this.loadMembersAsync()
+    },
+    onSort(field, order) {
+      this.sortField = field
+      this.sortOrder = order
       this.loadMembersAsync()
     }
   },

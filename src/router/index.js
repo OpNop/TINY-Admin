@@ -20,6 +20,15 @@ const routes = [
   },
   {
     meta: {
+      title: 'Ban List',
+      requiresAuth: true
+    },
+    path: '/ban',
+    name: 'ban',
+    component: () => import(/* webpackChunkName: "members" */ '../views/BanList.vue')
+  },
+  {
+    meta: {
       title: 'Members',
       requiresAuth: true
     },
