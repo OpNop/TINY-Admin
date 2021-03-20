@@ -6,7 +6,7 @@
           <div class="level-item">
             <div class="footer-copyright">
               <b>&copy; {{ year }}, TinyArmy.org</b> &mdash; Tiny Admin
-              <span class="tag">v1.4.2</span>
+              <span class="tag">v1.0.3</span>
             </div>
           </div>
         </div>
