@@ -64,6 +64,10 @@ export default {
     dataUrl: {
       type: String,
       default: null
+    },
+    account: {
+      type: String,
+      default: null
     }
   },
   data() {
@@ -82,7 +86,7 @@ export default {
   methods: {
     loadLogsAsync() {
       let params = [`limit=${this.perPage}`, `page=${this.page}`]
-      if (this.account !== undefined) {
+      if (this.account !== null) {
         params.push(`account=${this.account}`)
       }
       if (this.type !== undefined) {
