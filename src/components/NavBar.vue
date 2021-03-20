@@ -7,10 +7,8 @@
       >
         <b-icon :icon="menuToggleMobileIcon" />
       </a>
-      <div class="navbar-item has-control no-left-space-touch">
-        <div class="control">
-          <!-- <input class="input" placeholder="Search everywhere..." /> -->
-        </div>
+      <div class="navbar-item field has-control no-left-space-touch">
+        <member-search />
       </div>
     </div>
     <div class="navbar-brand is-right">
@@ -65,12 +63,14 @@
 import { mapState } from 'vuex'
 import NavBarMenu from '@/components/NavBarMenu'
 import UserAvatar from '@/components/UserAvatar'
+import MemberSearch from './MemberSearch.vue'
 
 export default {
   name: 'NavBar',
   components: {
     UserAvatar,
-    NavBarMenu
+    NavBarMenu,
+    MemberSearch
   },
   data () {
     return {
