@@ -31,24 +31,26 @@
           </div>
 
           <div slot="dropdown" class="navbar-dropdown">
-            <router-link
+            <!-- <router-link
               to="/profile"
               class="navbar-item"
               exact-active-class="is-active"
-            >
+            > -->
+            <a class="navbar-item" @click="profile">
               <b-icon icon="account" custom-size="default" />
               <span>My Profile</span>
-            </router-link>
-            <a class="navbar-item">
+            </a>
+            <!-- </router-link> -->
+            <a class="navbar-item" @click="settings">
               <b-icon icon="settings" custom-size="default"></b-icon>
               <span>Settings</span>
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" @click="messages">
               <b-icon icon="email" custom-size="default"></b-icon>
               <span>Messages</span>
             </a>
             <hr class="navbar-divider" />
-            <a class="navbar-item">
+            <a class="navbar-item" @click="logout">
               <b-icon icon="logout" custom-size="default"></b-icon>
               <span>Log Out</span>
             </a>
@@ -72,31 +74,53 @@ export default {
     NavBarMenu,
     MemberSearch
   },
-  data () {
+  data() {
     return {
       isMenuNavBarActive: false,
       userName: this.$store.getters.currentUser
     }
   },
   computed: {
-    menuNavBarToggleIcon () {
+    menuNavBarToggleIcon() {
       return this.isMenuNavBarActive ? 'close' : 'dots-vertical'
     },
-    menuToggleMobileIcon () {
+    menuToggleMobileIcon() {
       return this.isAsideMobileExpanded ? 'backburger' : 'forwardburger'
     },
     ...mapState(['isNavBarVisible', 'isAsideMobileExpanded'])
   },
   methods: {
-    menuToggleMobile () {
+    menuToggleMobile() {
       this.$store.commit('asideMobileStateToggle')
     },
-    menuNavBarToggle () {
+    menuNavBarToggle() {
       this.isMenuNavBarActive = !this.isMenuNavBarActive
     },
-    logout () {
+    profile() {
       this.$buefy.snackbar.open({
-        message: 'Log out clicked',
+        message: 'Soon™',
+        queue: false
+      })
+    },
+    settings() {
+      this.$buefy.snackbar.open({
+        message: 'Soon™',
+        queue: false
+      })
+    },
+    messages() {
+      this.$buefy.snackbar.open({
+        message: 'Soon™',
+        queue: false
+      })
+    },
+    logout() {
+      this.$store.dispatch('logout')
+      this.$router.push({
+        name: 'login'
+      })
+      this.$buefy.snackbar.open({
+        message: 'You have been logged out.',
         queue: false
       })
     }
