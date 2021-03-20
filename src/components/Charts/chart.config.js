@@ -1,7 +1,7 @@
 export const chartColors = {
   default: {
-    primary: '#00D1B2',
-    info: '#209CEE',
+    members: '#00D1B2',
+    gold: '#FFBF00',
     danger: '#FF3860'
   }
 }
@@ -9,7 +9,7 @@ export const chartColors = {
 export const baseChartOptions = {
   maintainAspectRatio: false,
   legend: {
-    display: false
+    display: true
   },
   responsive: true
 }
@@ -17,9 +17,9 @@ export const baseChartOptions = {
 export const chartOptionsMain = {
   ...baseChartOptions,
   tooltips: {
-    backgroundColor: '#f5f5f5',
-    titleFontColor: '#333',
-    bodyFontColor: '#666',
+    backgroundColor: '#3e3e3e',
+    titleFontColor: '#ddd',
+    bodyFontColor: '#ccc',
     bodySpacing: 4,
     xPadding: 12,
     mode: 'nearest',

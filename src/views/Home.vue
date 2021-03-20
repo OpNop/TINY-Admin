@@ -28,7 +28,7 @@
         />
       </tiles>
 
-      <!-- <card-component
+      <card-component
         title="Performance"
         icon="finance"
         header-icon="reload"
@@ -37,18 +37,21 @@
         <div v-if="defaultChart.chartData" class="chart-area">
           <line-chart
             ref="bigChart"
-            style="height: 100%;"
+            style="height: 100%"
             chart-id="big-line-chart"
             :chart-data="defaultChart.chartData"
             :extra-options="defaultChart.extraOptions"
           >
           </line-chart>
         </div>
-      </card-component> -->
+      </card-component>
 
-      <card-component title="New Members" class="has-table has-mobile-sort-spaced">
+      <card-component
+        title="New Members"
+        class="has-table has-mobile-sort-spaced"
+      >
         <guild-member-table
-          :data-url="`https://api.tinyarmy.org/v1/guild/members`"
+          data-url="https://api.tinyarmy.org/v1/guild/members"
           showGuild
         />
       </card-component>
@@ -64,51 +67,120 @@ import Tiles from '@/components/Tiles'
 import CardWidget from '@/components/CardWidget'
 import CardComponent from '@/components/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
-import ClientsTableSample from '@/components/ClientsTableSample'
 import GuildMemberTable from '@/components/GuildMemberTable'
+import dayjs from 'dayjs'
 import axios from 'axios'
 export default {
   name: 'Home',
   components: {
     GuildMemberTable,
-    ClientsTableSample,
     LineChart,
     CardComponent,
     CardWidget,
     Tiles,
     TitleBar
   },
-  data () {
+  data() {
     return {
       defaultChart: {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain
       },
+      chartData: [],
       members: 0,
       gold: 0
     }
   },
   computed: {
-    titleStack () {
+    titleStack() {
       return ['TINY', 'Dashboard']
     }
   },
-  mounted () {
+  mounted() {
     this.loadGuildStatsAsync()
-    this.fillChartData()
+    //this.fillChartData()
   },
   methods: {
     loadGuildStatsAsync() {
-      axios 
-        .get('https://api.tinyarmy.org/v1/guild/stats')
-        .then(r => {
-          if (r.data) {
-            this.members = r.data.current.members;
-            this.gold = r.data.current.gold;
-          }
-        })
+      axios.get('https://api.tinyarmy.org/v1/guild/stats').then(r => {
+        if (r.data) {
+          this.members = r.data.current.members
+          this.gold = r.data.current.gold
+          this.chartData = r.data.historical
+          this.loadChart()
+        }
+      })
     },
-    randomChartData (n) {
+    loadChart() {
+      this.defaultChart.extraOptions = {
+        ...chartConfig.chartOptionsMain,
+        type: 'line',
+        scales: {
+          yAxes: [
+            {
+              id: 'gold',
+              type: 'linear',
+              offset: true,
+              position: 'right',
+              gridLines: {
+                display: false
+              }
+            },
+            {
+              id: 'members',
+              type: 'linear',
+              offset: true,
+              grace: 1,
+              position: 'left',
+              ticks: {
+                padding: 20,
+                fontColor: '#9a9a9a',
+              }
+            }
+          ]
+        }
+      }
+      this.defaultChart.chartData = {
+        labels: this.chartData.map(q => dayjs(q.time).format('MMM D')),
+        datasets: [
+          {
+            label: 'Gold',
+            yAxisID: 'gold',
+            fill: false,
+            borderColor: chartConfig.chartColors.default.gold,
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            pointBackgroundColor: chartConfig.chartColors.default.gold,
+            pointBorderColor: 'rgba(255,255,255,0)',
+            pointHoverBackgroundColor: chartConfig.chartColors.default.gold,
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4,
+            data: this.chartData.map(q => q.gold / 10000)
+          },
+          {
+            fill: false,
+            borderColor: chartConfig.chartColors.default.members,
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            pointBackgroundColor: chartConfig.chartColors.default.members,
+            pointBorderColor: 'rgba(255,255,255,0)',
+            pointHoverBackgroundColor: chartConfig.chartColors.default.members,
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4,
+            label: 'Members',
+            yAxisID: 'members',
+            data: this.chartData.map(q => q.members)
+          }
+        ]
+      }
+    },
+    randomChartData(n) {
       const data = []
 
       for (let i = 0; i < n; i++) {
@@ -117,7 +189,7 @@ export default {
 
       return data
     },
-    fillChartData () {
+    fillChartData() {
       this.defaultChart.chartData = {
         datasets: [
           {
