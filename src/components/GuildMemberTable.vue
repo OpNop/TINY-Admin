@@ -25,7 +25,7 @@
         >
           <div class="image">
             <img
-              :src="'https://emblem.werdes.net/emblem/' + props.row.guild_guid"
+              :src="`https://emblem.werdes.net/emblem/${props.row.guild_guid}/24`"
               :alt="props.row.name"
             />
           </div>
