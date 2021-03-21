@@ -42,7 +42,7 @@ export default {
       this.isLoading = true
       axios
         .get(
-          `https://api.tinyarmy.org/v1/guild/members/search?account=${account}`
+          `https://api.tinyarmy.org/v1/members/search?account=${account}`
         )
         .then(r => {
           this.data = r.data.map(item => item)
