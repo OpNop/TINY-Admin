@@ -23,17 +23,20 @@
       default-sort-direction="desc"
       :data="logs"
     >
-      <template slot-scope="props">
-        <b-table-column label="Message" field="message" width="auto">
-          {{ props.row.message }}
-        </b-table-column>
-        <b-table-column label="Type" field="type" sortable>
-          {{ props.row.type }}
-        </b-table-column>
-        <b-table-column label="Date" field="date" sortable>
-          {{ props.row.date }}
-        </b-table-column>
-      </template>
+      <b-table-column
+        label="Message"
+        field="message"
+        width="auto"
+        v-slot="props"
+      >
+        {{ props.row.message }}
+      </b-table-column>
+      <b-table-column label="Type" field="type" sortable v-slot="props">
+        {{ props.row.type }}
+      </b-table-column>
+      <b-table-column label="Date" field="date" sortable v-slot="props">
+        {{ props.row.date }}
+      </b-table-column>
 
       <section slot="empty" class="section">
         <div class="content has-text-grey has-text-centered">

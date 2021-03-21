@@ -17,63 +17,63 @@
       <div class="columns">
         <div class="column is-3">
           <div class="tile is-ancestor">
-            <div class="tile is-vertical">
-              <div class="tile">
-                <div class="tile is-parent is-vertical">
-                  <card-component
-                    title="Member Info"
-                    icon="account"
-                    class="tile is-child"
+            <div class="tile is-vertical is-parent">
+              <div class="tile is-child">
+                <card-component
+                  title="Member Info"
+                  icon="account"
+                  class="tile is-child"
+                >
+                  <b-field label="Account">
+                    {{ account }}
+                  </b-field>
+                  <b-field label="Original Join Date">
+                    {{ created }}
+                  </b-field>
+                  <b-field label="Discord Account">
+                    {{ discord }}
+                  </b-field>
+                </card-component>
+              </div>
+              <div class="tile is-child">
+                <card-component
+                  title="Guilds"
+                  icon="account-group"
+                  class="tile is-child"
+                >
+                  <div
+                    v-if="guilds.length == 0"
+                    class="content has-text-centered has-text-grey"
                   >
-                    <b-field label="Account">
-                      {{ account }}
-                    </b-field>
-                    <b-field label="Original Join Date">
-                      {{ created }}
-                    </b-field>
-                    <b-field label="Discord Account">
-                      {{ discord }}
-                    </b-field>
-                  </card-component>
-                  <card-component
-                    title="Guilds"
-                    icon="account-group"
-                    class="tile is-child"
+                    <p>
+                      <b-icon icon="emoticon-sad" size="is-large"></b-icon>
+                    </p>
+                    <p>Not in any guilds</p>
+                  </div>
+                  <div
+                    v-else
+                    class="media"
+                    v-for="guild in guilds"
+                    :key="guild.guild_guid"
                   >
-                    <div
-                      v-if="guilds.length == 0"
-                      class="content has-text-centered has-text-grey"
-                    >
-                      <p>
-                        <b-icon icon="emoticon-sad" size="is-large"></b-icon>
-                      </p>
-                      <p>Not in any guilds</p>
-                    </div>
-                    <div
-                      v-else
-                      class="media"
-                      v-for="guild in guilds"
-                      :key="guild.guild_guid"
-                    >
-                      <figure class="media-left">
-                        <user-guild
-                          :guild="guild.guild_guid"
-                          class="image has-max-width"
-                        />
-                      </figure>
-                      <div class="media-content">
-                        <div class="content">
-                          <b-field label="Rank">
-                            {{ guild.guild_rank }}
-                          </b-field>
-                          <b-field label="Date Joined">
-                            {{ guild.date_joined }}
-                          </b-field>
-                        </div>
+                    <figure class="media-left">
+                      <user-guild
+                        :guild="guild.guild_guid"
+                        class="image has-max-width"
+                      />
+                    </figure>
+                    <div class="media-content">
+                      <div class="content">
+                        <b-field label="Rank">
+                          {{ guild.guild_rank }}
+                        </b-field>
+                        <b-field label="Date Joined">
+                          {{ guild.date_joined }}
+                        </b-field>
                       </div>
                     </div>
-                  </card-component>
-                </div>
+                  </div>
+                </card-component>
               </div>
             </div>
           </div>
@@ -157,9 +157,7 @@ export default {
             type: 'is-danger'
           })
         })
-        .finally(() => {
-          
-        })
+        .finally(() => {})
     }
   }
 }

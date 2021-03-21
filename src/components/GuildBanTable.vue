@@ -8,38 +8,48 @@
       default-sort-direction="asc"
       :data="members"
     >
-      <template slot-scope="props">
-        <b-table-column label="Account" field="account" width="auto">
+      <b-table-column
+        label="Account"
+        field="account"
+        width="auto"
+        v-slot="props"
+      >
+        <router-link
+          :to="{ name: 'member.view', params: { account: props.row.account } }"
+        >
+          {{ props.row.account }}
+        </router-link>
+      </b-table-column>
+      <b-table-column label="Discord Name" field="discord" v-slot="props">
+        {{ props.row.discord }}
+      </b-table-column>
+      <b-table-column label="Reason" field="reason" v-slot="props">
+        {{ props.row.reason }}
+      </b-table-column>
+      <b-table-column
+        custom-key="actions"
+        class="is-actions-cell"
+        v-slot="props"
+      >
+        <div class="buttons is-right">
           <router-link
-              :to="{ name: 'member.view', params: { account: props.row.account } }"
-            >
-            {{ props.row.account }}
+            :to="{
+              name: 'member.view',
+              params: { account: props.row.account },
+            }"
+            class="button is-small is-primary"
+          >
+            <b-icon icon="account-edit" size="is-small" />
           </router-link>
-        </b-table-column>
-        <b-table-column label="Discord Name" field="discord">
-          {{ props.row.discord }}
-        </b-table-column>
-        <b-table-column label="Reason" field="reason">
-          {{ props.row.reason }}
-        </b-table-column>
-        <b-table-column custom-key="actions" class="is-actions-cell">
-          <div class="buttons is-right">
-            <router-link
-              :to="{ name: 'member.view', params: { account: props.row.account } }"
-              class="button is-small is-primary"
-            >
-              <b-icon icon="account-edit" size="is-small" />
-            </router-link>
-            <button
-              class="button is-small is-danger"
-              type="button"
-              @click.prevent="trashModal(props.row)"
-            >
-              <b-icon icon="trash-can" size="is-small" />
-            </button>
-          </div>
-        </b-table-column>
-      </template>
+          <button
+            class="button is-small is-danger"
+            type="button"
+            @click.prevent="trashModal(props.row)"
+          >
+            <b-icon icon="trash-can" size="is-small" />
+          </button>
+        </div>
+      </b-table-column>
 
       <section slot="empty" class="section">
         <div class="content has-text-grey has-text-centered">
@@ -53,7 +63,7 @@
             <p>
               <b-icon icon="emoticon-sad" size="is-large" />
             </p>
-            <p>Nothing's here&hellip;</p> 
+            <p>Nothing's here&hellip;</p>
           </template>
         </div>
       </section>
@@ -75,7 +85,7 @@ export default {
   data() {
     return {
       members: [],
-      isLoading: false,
+      isLoading: false
     }
   },
   methods: {

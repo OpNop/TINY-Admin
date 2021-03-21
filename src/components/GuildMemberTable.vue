@@ -6,70 +6,87 @@
       :striped="true"
       :hoverable="true"
       :data="members"
-      
       backend-sorting
       :default-sort="[sortField, sortOrder]"
       :default-sort-direction="sortOrder"
       @sort="onSort"
-      
       paginated
       backend-pagination
       :total="ResultTotal"
       :per-page="perPage"
       @page-change="onPageChange"
     >
-      <template slot-scope="props">
-        <b-table-column
-          class="has-no-head-mobile is-image-cell"
-          v-if="showGuild"
+      <b-table-column
+        class="has-no-head-mobile is-image-cell"
+        v-if="showGuild"
+        v-slot="props"
+      >
+        <div class="image">
+          <img
+            :src="`https://emblem.werdes.net/emblem/${props.row.guild_guid}`"
+            :alt="props.row.name"
+          />
+        </div>
+      </b-table-column>
+      <b-table-column
+        label="Account"
+        field="account"
+        width="auto"
+        sortable
+        v-slot="props"
+      >
+        <router-link
+          :to="{
+            name: 'member.view',
+            params: { account: props.row.account },
+          }"
         >
-          <div class="image">
-            <img
-              :src="`https://emblem.werdes.net/emblem/${props.row.guild_guid}`"
-              :alt="props.row.name"
-            />
-          </div>
-        </b-table-column>
-        <b-table-column label="Account" field="account" width="auto" sortable>
+          {{ props.row.account }}
+        </router-link>
+      </b-table-column>
+      <b-table-column
+        label="Guild"
+        field="name"
+        v-if="showGuild"
+        v-slot="props"
+      >
+        {{ props.row.guild_name }}
+      </b-table-column>
+      <b-table-column label="Rank" field="guild_rank" sortable v-slot="props">
+        {{ props.row.guild_rank }}
+      </b-table-column>
+      <b-table-column
+        label="Date Joined"
+        field="date_joined"
+        sortable
+        v-slot="props"
+      >
+        {{ props.row.date_joined }}
+      </b-table-column>
+      <b-table-column
+        custom-key="actions"
+        class="is-actions-cell"
+        v-slot="props"
+      >
+        <div class="buttons is-right">
           <router-link
             :to="{
               name: 'member.view',
               params: { account: props.row.account },
             }"
+            class="button is-small is-primary"
           >
-            {{ props.row.account }}
+            <b-icon icon="account-edit" size="is-small" />
           </router-link>
-        </b-table-column>
-        <b-table-column label="Guild" field="name" v-if="showGuild">
-          {{ props.row.guild_name }}
-        </b-table-column>
-        <b-table-column label="Rank" field="guild_rank" sortable>
-          {{ props.row.guild_rank }}
-        </b-table-column>
-        <b-table-column label="Date Joined" field="date_joined" sortable>
-          {{ props.row.date_joined }}
-        </b-table-column>
-        <b-table-column custom-key="actions" class="is-actions-cell">
-          <div class="buttons is-right">
-            <router-link
-              :to="{
-                name: 'member.view',
-                params: { account: props.row.account },
-              }"
-              class="button is-small is-primary"
-            >
-              <b-icon icon="account-edit" size="is-small" />
-            </router-link>
-            <button
-              class="button is-small is-danger"
-              type="button"
-              @click.prevent="trashModal(props.row)"
-            >
-              <b-icon icon="trash-can" size="is-small" />
-            </button>
-          </div>
-        </b-table-column>
-      </template>
+          <button
+            class="button is-small is-danger"
+            type="button"
+            @click.prevent="trashModal(props.row)"
+          >
+            <b-icon icon="trash-can" size="is-small" />
+          </button>
+        </div>
+      </b-table-column>
 
       <section slot="empty" class="section">
         <div class="content has-text-grey has-text-centered">
@@ -128,7 +145,7 @@ export default {
         `page=${this.page}`,
         `sort_by=${this.sortField}`,
         `order_by=${this.sortOrder}`
-      ].join('&');
+      ].join('&')
       // if (this.account !== undefined) {
       //   params.push(`account=${this.account}`)
       // }
