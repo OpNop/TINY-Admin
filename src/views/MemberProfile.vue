@@ -4,6 +4,16 @@
       <router-link slot="right" to="/" class="button"> Dashboard </router-link>
     </title-bar>
     <section class="section is-main-section">
+      <b-message
+        v-if="is_banned"
+        title="This user is banned"
+        type="is-danger"
+        has-icon
+        :closable="false"
+      >
+        {{ ban_data.reason }}
+      </b-message>
+
       <div class="columns">
         <div class="column is-4">
           <div class="tile is-ancestor">
