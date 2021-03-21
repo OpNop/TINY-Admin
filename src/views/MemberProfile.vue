@@ -15,7 +15,7 @@
       </b-message>
 
       <div class="columns">
-        <div class="column is-4">
+        <div class="column is-3">
           <div class="tile is-ancestor">
             <div class="tile is-vertical">
               <div class="tile">
@@ -26,33 +26,48 @@
                     class="tile is-child"
                   >
                     <b-field label="Account">
-                      <b-input
-                        :value="account"
-                        custom-class="is-static"
-                        readonly
-                      />
+                      {{ account }}
                     </b-field>
                     <b-field label="Original Join Date">
-                      <b-input
-                        :value="created"
-                        custom-class="is-static"
-                        readonly
-                      />
+                      {{ created }}
                     </b-field>
                   </card-component>
                   <card-component
                     title="Guilds"
-                    icon="account"
+                    icon="account-group"
                     class="tile is-child"
                   >
-                    <div class="is-flex is-justify-content-center">
-                      <user-guild
-                        guild="0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE"
-                        class="image has-max-width"
-                      /><user-guild
-                        guild="BA7EC8EA-6B52-E811-81A8-90824340DEC8"
-                        class="image has-max-width"
-                      />
+                    <div
+                      v-if="guilds.length == 0"
+                      class="content has-text-centered has-text-grey"
+                    >
+                      <p>
+                        <b-icon icon="emoticon-sad" size="is-large"></b-icon>
+                      </p>
+                      <p>Not in any guilds</p>
+                    </div>
+                    <div
+                      v-else
+                      class="media"
+                      v-for="guild in guilds"
+                      :key="guild.guild_guid"
+                    >
+                      <figure class="media-left">
+                        <user-guild
+                          :guild="guild.guild_guid"
+                          class="image has-max-width"
+                        />
+                      </figure>
+                      <div class="media-content">
+                        <div class="content">
+                          <b-field label="Rank">
+                            {{ guild.guild_rank }}
+                          </b-field>
+                          <b-field label="Date Joined">
+                            {{ guild.date_joined }}
+                          </b-field>
+                        </div>
+                      </div>
                     </div>
                   </card-component>
                 </div>
@@ -86,7 +101,7 @@ import CardComponent from '@/components/CardComponent'
 import UserGuild from '@/components/UserGuild'
 import GuildLogTable from '@/components/GuildLogTable'
 
-dayjs.extend(advancedFormat);
+dayjs.extend(advancedFormat)
 
 export default {
   name: 'MemberProfile',
@@ -120,12 +135,12 @@ export default {
         .get(`https://api.tinyarmy.org/v1/members/${this.account}`)
         .then(r => {
           // 2018-05-08 3:00 is date Pewpews Army was created
-          if(dayjs(r.data.created).isBefore('2018-05-08', 'month')){
-            this.created = "Data Lost";
+          if (dayjs(r.data.created).isBefore('2018-05-08', 'month')) {
+            this.created = 'Data Lost'
           } else {
             this.created = dayjs(r.data.created).format('MMMM Do, YYYY h:mm A')
           }
-          
+
           this.guilds = r.data.guilds
           this.is_banned = r.data.is_banned
           if (this.is_banned) this.ban_data = r.data.ban_reason
@@ -136,6 +151,9 @@ export default {
             message: `Error: ${error.message}`,
             type: 'is-danger'
           })
+        })
+        .finally(() => {
+          
         })
     }
   }
