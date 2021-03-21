@@ -31,6 +31,9 @@
                     <b-field label="Original Join Date">
                       {{ created }}
                     </b-field>
+                    <b-field label="Discord Account">
+                      {{ discord }}
+                    </b-field>
                   </card-component>
                   <card-component
                     title="Guilds"
@@ -114,6 +117,7 @@ export default {
   data() {
     return {
       account: null,
+      discord: '',
       created: '',
       guilds: [],
       is_banned: false,
@@ -141,6 +145,7 @@ export default {
             this.created = dayjs(r.data.created).format('MMMM Do, YYYY h:mm A')
           }
 
+          this.discord = r.data.discord
           this.guilds = r.data.guilds
           this.is_banned = r.data.is_banned
           if (this.is_banned) this.ban_data = r.data.ban_reason
