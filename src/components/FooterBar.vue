@@ -6,7 +6,7 @@
           <div class="level-item">
             <div class="footer-copyright">
               <b>&copy; {{ year }}, TinyArmy.org</b> &mdash; Tiny Admin
-              <span class="tag">v1.0.3</span>
+              <span class="tag">v{{version}}</span>
             </div>
           </div>
         </div>
@@ -19,12 +19,16 @@
 <script>
 import dayjs from 'dayjs'
 import { mapState } from 'vuex'
+import {version} from '/package.json';
 
 export default {
   name: 'FooterBar',
   computed: {
     year () {
       return dayjs().year()
+    },
+    version() {
+      return version;
     },
     ...mapState(['isFooterBarVisible'])
   }
