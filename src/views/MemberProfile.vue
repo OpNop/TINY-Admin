@@ -31,7 +31,12 @@
                     {{ created }}
                   </b-field>
                   <b-field label="Discord Account">
-                    {{ discord }}
+                    <vue-inline-text-editor
+                      :value.sync="discord"
+                      placeholder="Discord Account"
+                      close-on-blur
+                    >
+                    </vue-inline-text-editor>
                   </b-field>
                 </card-component>
               </div>
@@ -98,6 +103,7 @@
 <script>
 import axios from 'axios'
 import dayjs from 'dayjs'
+import VueInlineTextEditor from 'vue-inline-text-editor'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
@@ -112,7 +118,8 @@ export default {
     UserGuild,
     CardComponent,
     TitleBar,
-    GuildLogTable
+    GuildLogTable,
+    VueInlineTextEditor
   },
   data() {
     return {
