@@ -24,7 +24,7 @@
                     </b-field>
                     <b-field label="Original Join Date">
                       <b-input
-                        value="2021-03-17 05:16:44"
+                        :value="created"
                         custom-class="is-static"
                         readonly
                       />
@@ -68,10 +68,15 @@
 </template>
 
 <script>
+import axios from 'axios'
+import dayjs from 'dayjs'
+import advancedFormat from 'dayjs/plugin/advancedFormat'
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import UserGuild from '@/components/UserGuild'
 import GuildLogTable from '@/components/GuildLogTable'
+
+dayjs.extend(advancedFormat);
 
 export default {
   name: 'MemberProfile',
@@ -83,7 +88,11 @@ export default {
   },
   data() {
     return {
-      account: null
+      account: null,
+      created: '',
+      guilds: [],
+      is_banned: false,
+      ban_data: ''
     }
   },
   computed: {
@@ -93,6 +102,32 @@ export default {
   },
   created() {
     this.account = this.$route.params.account
+    this.getUserInfo()
+  },
+  methods: {
+    getUserInfo() {
+      axios
+        .get(`https://api.tinyarmy.org/v1/members/${this.account}`)
+        .then(r => {
+          // 2018-05-08 3:00 is date Pewpews Army was created
+          if(dayjs(r.data.created).isBefore('2018-05-08', 'month')){
+            this.created = "Data Lost";
+          } else {
+            this.created = dayjs(r.data.created).format('MMMM Do, YYYY h:mm A')
+          }
+          
+          this.guilds = r.data.guilds
+          this.is_banned = r.data.is_banned
+          if (this.is_banned) this.ban_data = r.data.ban_reason
+        })
+        .catch(error => {
+          this.data = []
+          this.$buefy.toast.open({
+            message: `Error: ${error.message}`,
+            type: 'is-danger'
+          })
+        })
+    }
   }
 }
 </script>
