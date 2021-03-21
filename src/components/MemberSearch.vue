@@ -65,6 +65,7 @@ export default {
           name: 'member.view',
           params: { account: account.account }
         })
+        this.data = [];
       }
     }
   }
