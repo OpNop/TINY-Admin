@@ -10,7 +10,7 @@
         icon="format-list-bulleted-square"
       >
         <guild-ban-table
-          :data-url="`https://api.tinyarmy.org/v1/guild/bans`"
+          :data-url="`https://api.tinyarmy.org/v1/members/banned`"
         />
       </card-component>
     </section>
