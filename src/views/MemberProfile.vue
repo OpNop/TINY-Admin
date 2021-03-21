@@ -5,26 +5,11 @@
     </title-bar>
     <section class="section is-main-section">
       <div class="columns">
-        <div class="column">
+        <div class="column is-4">
           <div class="tile is-ancestor">
             <div class="tile is-vertical">
               <div class="tile">
                 <div class="tile is-parent is-vertical">
-                  <card-component
-                    title="Guilds"
-                    icon="account"
-                    class="tile is-child"
-                  >
-                    <div class="is-flex is-justify-content-center">
-                      <user-guild
-                        guild="0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE"
-                        class="image has-max-width"
-                      /><user-guild
-                        guild="BA7EC8EA-6B52-E811-81A8-90824340DEC8"
-                        class="image has-max-width"
-                      />
-                    </div>
-                  </card-component>
                   <card-component
                     title="Member Info"
                     icon="account"
@@ -44,6 +29,21 @@
                         readonly
                       />
                     </b-field>
+                  </card-component>
+                  <card-component
+                    title="Guilds"
+                    icon="account"
+                    class="tile is-child"
+                  >
+                    <div class="is-flex is-justify-content-center">
+                      <user-guild
+                        guild="0A9D5AFD-9709-E911-81A8-A25FC8B1A2FE"
+                        class="image has-max-width"
+                      /><user-guild
+                        guild="BA7EC8EA-6B52-E811-81A8-90824340DEC8"
+                        class="image has-max-width"
+                      />
+                    </div>
                   </card-component>
                 </div>
               </div>
