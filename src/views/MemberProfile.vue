@@ -74,7 +74,7 @@ import UserGuild from '@/components/UserGuild'
 import GuildLogTable from '@/components/GuildLogTable'
 
 export default {
-  name: 'MemberForm',
+  name: 'MemberProfile',
   components: {
     UserGuild,
     CardComponent,

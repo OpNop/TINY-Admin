@@ -73,7 +73,7 @@ const routes = [
     },
     path: '/member/:account',
     name: 'member.view',
-    component: () => import(/* webpackChunkName: "client-form" */ '../views/MemberForm.vue'),
+    component: () => import(/* webpackChunkName: "client-form" */ '../views/MemberProfile.vue'),
     props: true
   },
   {
