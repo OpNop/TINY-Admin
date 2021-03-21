@@ -58,11 +58,6 @@ export default {
             icon: 'desktop-mac',
             label: 'Dashboard'
           },
-          // {
-          //   to: '/recruits',
-          //   icon: 'account-plus',
-          //   label: 'Recruits'
-          // },
           {
             to: '/ban',
             icon: 'account-cancel',
