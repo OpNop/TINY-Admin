@@ -164,6 +164,7 @@ export default {
     }
   },
   created () {
+    axios.defaults.withCredentials = true
     axios.defaults.headers.common['Authorization'] = this.$store.state.token;
   }
 }

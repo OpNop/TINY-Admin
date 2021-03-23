@@ -87,11 +87,7 @@ export default new Vuex.Store({
     login({commit}, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({
-            url: 'https://api.tinyarmy.org/v1/auth/login',
-            data: user,
-            method: 'POST'
-          })
+        axios.post('https://api.tinyarmy.org/v1/auth/login', user, { withCredentials: true })
           .then(resp => {
             const token = resp.data.token
             const user = resp.data.user
@@ -117,6 +113,7 @@ export default new Vuex.Store({
         resolve()
       })
     }
+
 
   },
   getters : {

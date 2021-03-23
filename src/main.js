@@ -12,6 +12,8 @@ import store from './store'
 /* Service Worker */
 import './registerServiceWorker'
 
+import VueEasyJwt from 'vue-easy-jwt'
+
 /* Vue. Main component */
 import App from './App.vue'
 
@@ -32,6 +34,7 @@ router.afterEach(to => {
 Vue.config.productionTip = false
 
 Vue.use(Buefy)
+Vue.use(VueEasyJwt)
 
 new Vue({
   router,

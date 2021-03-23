@@ -3,6 +3,11 @@ import VueRouter from 'vue-router'
 import store from '../store'
 import Home from '../views/Home.vue'
 import Login from '../components/Login.vue'
+import axios from 'axios'
+import {
+  VueEasyJwt
+} from "vue-easy-jwt";
+const jwt = new VueEasyJwt();
 
 Vue.use(VueRouter)
 
@@ -97,15 +102,28 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next()
-      return
+  to.matched.some((route) => {
+    if (route.meta.requiresAuth) {
+      const token = localStorage.getItem('token');
+
+      if (jwt.isExpired(token)) {
+        //try and refresh token
+        axios.post('https://api.tinyarmy.org/v1/auth/refresh_token')
+          .then((data) => {
+            localStorage.setItem('token', data.data.token);
+            next();
+          })
+          .catch(() => {
+            localStorage.removeItem('token')
+            next('/login');
+          })
+      } else {
+        next();
+      }
+    } else {
+      next();
     }
-    next('/login') 
-  } else {
-    next() 
-  }
-})
+  });
+});
 
 export default router
