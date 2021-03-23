@@ -11,8 +11,7 @@ const jwt = new VueEasyJwt();
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     // Document title tag
     // We combine it with defaultDocumentTitle set in `src/main.js` on router.afterEach hook
     meta: {
@@ -30,7 +29,7 @@ const routes = [
     },
     path: '/ban',
     name: 'ban',
-    component: () => import(/* webpackChunkName: "members" */ '../views/BanList.vue')
+    component: () => import( /* webpackChunkName: "members" */ '../views/BanList.vue')
   },
   {
     meta: {
@@ -42,7 +41,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "members" */ '../views/Members.vue')
+    component: () => import( /* webpackChunkName: "members" */ '../views/Members.vue')
   },
   {
     meta: {
@@ -51,7 +50,7 @@ const routes = [
     },
     path: '/treasury/:guid',
     name: 'Treasury',
-    component: () => import(/* webpackChunkName: "treasury" */ '../views/Treasury.vue')
+    component: () => import( /* webpackChunkName: "treasury" */ '../views/Treasury.vue')
   },
   {
     meta: {
@@ -60,7 +59,7 @@ const routes = [
     },
     path: '/stash/:guid',
     name: 'Stash',
-    component: () => import(/* webpackChunkName: "stash" */ '../views/Stash.vue')
+    component: () => import( /* webpackChunkName: "stash" */ '../views/Stash.vue')
   },
   {
     meta: {
@@ -69,7 +68,7 @@ const routes = [
     },
     path: '/logs/:guid',
     name: 'Logs',
-    component: () => import(/* webpackChunkName: "logs" */ '../views/Logs.vue')
+    component: () => import( /* webpackChunkName: "logs" */ '../views/Logs.vue')
   },
   {
     meta: {
@@ -78,13 +77,13 @@ const routes = [
     },
     path: '/member/:account',
     name: 'member.view',
-    component: () => import(/* webpackChunkName: "client-form" */ '../views/MemberProfile.vue'),
+    component: () => import( /* webpackChunkName: "client-form" */ '../views/MemberProfile.vue'),
     props: true
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
+    component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue')
   },
 ]
 
@@ -92,11 +91,14 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     } else {
-      return { x: 0, y: 0 }
+      return {
+        x: 0,
+        y: 0
+      }
     }
   }
 })
