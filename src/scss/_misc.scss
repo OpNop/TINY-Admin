@@ -27,3 +27,11 @@
     border-radius: $radius-rounded;
   }
 }
+
+.site {
+  min-height: calc(100vh - 52px);
+}
+
+.site__content {
+  flex: 1;
+}

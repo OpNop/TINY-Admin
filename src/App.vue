@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <div v-if="this.$router.currentRoute.name !== 'login'">
+    <div v-if="this.$router.currentRoute.name !== 'login'" class="is-flex-desktop is-flex-direction-column site">
       <nav-bar />
       <aside-menu :menu="menu" />
-      <router-view :key="$route.fullPath" />
+      <router-view class="site__content" :key="$route.fullPath" />
       <footer-bar />
     </div>
     <div v-if="this.$router.currentRoute.name == 'login'">
