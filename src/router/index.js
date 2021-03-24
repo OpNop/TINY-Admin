@@ -113,6 +113,7 @@ router.beforeEach((to, from, next) => {
         axios.post('https://api.tinyarmy.org/v1/auth/refresh_token')
           .then((data) => {
             localStorage.setItem('token', data.data.token);
+            axios.defaults.headers.common['Authorization'] = data.data.token
             next();
           })
           .catch(() => {
