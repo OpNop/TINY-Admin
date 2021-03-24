@@ -31,12 +31,28 @@
                     {{ created }}
                   </b-field>
                   <b-field label="Discord Account">
-                    <vue-inline-text-editor
+                    <inline-text-editor
                       :value.sync="discord"
-                      placeholder="Discord Account"
-                      close-on-blur
+                      placeholder="Click to add..."
+                      @update="onUpdateDiscord"
+                      :validatorCb="ValidateDiscordUser"
                     >
-                    </vue-inline-text-editor>
+                      <b-icon
+                        slot="edit-label"
+                        icon="pencil"
+                        size="is-small"
+                      ></b-icon>
+                      <b-icon
+                        slot="confirm-label"
+                        icon="content-save"
+                        size="is-small"
+                      ></b-icon>
+                      <b-icon
+                        slot="cancel-label"
+                        icon="cancel"
+                        size="is-small"
+                      ></b-icon>
+                    </inline-text-editor>
                   </b-field>
                 </card-component>
               </div>
@@ -103,7 +119,7 @@
 <script>
 import axios from 'axios'
 import dayjs from 'dayjs'
-import VueInlineTextEditor from 'vue-inline-text-editor'
+import InlineTextEditor from '@/components/InlineTextEditor'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
@@ -119,7 +135,7 @@ export default {
     CardComponent,
     TitleBar,
     GuildLogTable,
-    VueInlineTextEditor
+    InlineTextEditor
   },
   data() {
     return {
@@ -141,6 +157,30 @@ export default {
     this.getUserInfo()
   },
   methods: {
+    ValidateDiscordUser(value) {
+      // Only allow empty or name#1234
+      if (value == '' || /^((.{2,32})#\d{4})$/.test(value)) {
+        return true
+      } else {
+        return 'Invalid discord username'
+      }
+    },
+    onUpdateDiscord() {
+      if (this.discord == '' || /^((.{2,32})#\d{4})$/.test(this.discord)) {
+        alert('saving')
+      } else {
+        this.$buefy.dialog.alert({
+          title: 'Invalid Discord Account',
+          message: `The account <b>${this.discord}</b> does not seem to be a valid discord account name.`,
+          type: 'is-danger',
+          hasIcon: true,
+          icon: 'times-circle',
+          iconPack: 'fa',
+          ariaRole: 'alertdialog',
+          ariaModal: true
+        })
+      }
+    },
     getUserInfo() {
       axios
         .get(`https://api.tinyarmy.org/v1/members/${this.account}`)
