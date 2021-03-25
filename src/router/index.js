@@ -103,30 +103,41 @@ const router = new VueRouter({
   }
 })
 
-router.beforeEach((to, from, next) => {
-  to.matched.some((route) => {
-    if (route.meta.requiresAuth) {
-      const token = localStorage.getItem('token');
+// router.beforeEach((to, from, next) => {
+//   to.matched.some((route) => {
+//     if (route.meta.requiresAuth) {
+//       const token = localStorage.getItem('token');
 
-      if (jwt.isExpired(token)) {
-        //try and refresh token
-        axios.post('https://api.tinyarmy.org/v1/auth/refresh_token')
-          .then((data) => {
-            localStorage.setItem('token', data.data.token);
-            axios.defaults.headers.common['Authorization'] = data.data.token
-            next();
-          })
-          .catch(() => {
-            localStorage.removeItem('token')
-            next('/login');
-          })
-      } else {
-        next();
-      }
-    } else {
-      next();
+//       if (jwt.isExpired(token)) {
+//         //try and refresh token
+//         axios.post('https://api.tinyarmy.org/v1/auth/refresh_token')
+//           .then((data) => {
+//             localStorage.setItem('token', data.data.token);
+//             axios.defaults.headers.common['Authorization'] = data.data.token
+//             next();
+//           })
+//           .catch(() => {
+//             localStorage.removeItem('token')
+//             next('/login');
+//           })
+//       } else {
+//         next();
+//       }
+//     } else {
+//       next();
+//     }
+//   });
+// });
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
     }
-  });
-});
+    next('/login') 
+  } else {
+    next() 
+  }
+})
 
 export default router

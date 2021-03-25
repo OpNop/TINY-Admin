@@ -105,10 +105,7 @@
             icon="format-list-bulleted-square"
             class="tile is-child has-table has-mobile-sort-spaced"
           >
-            <guild-log-table
-              :data-url="`https://api.tinyarmy.org/v1/guild/logs`"
-              :account="account"
-            />
+            <guild-log-table :account="account" />
           </card-component>
         </div>
       </div>
@@ -117,7 +114,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import api from '@/services/api'
 import dayjs from 'dayjs'
 import InlineTextEditor from '@/components/InlineTextEditor'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
@@ -167,7 +164,7 @@ export default {
     },
     onUpdateDiscord() {
       if (this.discord == '' || /^((.{2,32})#\d{4})$/.test(this.discord)) {
-        alert('saving')
+        //axios.post()
       } else {
         this.$buefy.dialog.alert({
           title: 'Invalid Discord Account',
@@ -182,8 +179,7 @@ export default {
       }
     },
     getUserInfo() {
-      axios
-        .get(`https://api.tinyarmy.org/v1/members/${this.account}`)
+      api.getMember(this.account)
         .then(r => {
           // 2018-05-08 3:00 is date Pewpews Army was created
           if (dayjs(r.data.created).isBefore('2018-05-08', 'month')) {

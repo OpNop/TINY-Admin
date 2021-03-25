@@ -109,12 +109,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import api from '@/services/api'
 
 export default {
   name: 'GuildMemberTable',
   props: {
-    dataUrl: {
+    guild: {
       type: String,
       default: null
     },
@@ -154,8 +154,7 @@ export default {
       // }
       // params = params.join('&')
       this.isLoading = true
-      axios
-        .get(`${this.dataUrl}?${params}`)
+      api.getMembers(params, this.guild)
         .then(r => {
           if (r.data) {
             this.PageTotal = r.data.PageTotal

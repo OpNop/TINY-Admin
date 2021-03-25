@@ -21,7 +21,7 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import axios from 'axios'
+import api from '@/services/api'
 
 export default {
   name: 'MemberSearch',
@@ -40,10 +40,7 @@ export default {
         return
       }
       this.isLoading = true
-      axios
-        .get(
-          `https://api.tinyarmy.org/v1/members/search?account=${account}`
-        )
+      api.findMember(account)
         .then(r => {
           this.data = r.data.map(item => item)
         })

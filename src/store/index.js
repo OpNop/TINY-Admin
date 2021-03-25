@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import api from '@/services/api'
 import axios from 'axios'
 
 Vue.use(Vuex)
@@ -87,7 +88,7 @@ export default new Vuex.Store({
     login({commit}, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios.post('https://api.tinyarmy.org/v1/auth/login', user, { withCredentials: true })
+        api.login(user)
           .then(resp => {
             const token = resp.data.token
             const user = resp.data.user

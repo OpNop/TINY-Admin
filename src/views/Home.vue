@@ -50,10 +50,7 @@
         title="New Members"
         class="has-table has-mobile-sort-spaced"
       >
-        <guild-member-table
-          data-url="https://api.tinyarmy.org/v1/guild/members"
-          showGuild
-        />
+        <guild-member-table showGuild />
       </card-component>
     </section>
   </div>
@@ -69,7 +66,7 @@ import CardComponent from '@/components/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
 import GuildMemberTable from '@/components/GuildMemberTable'
 import dayjs from 'dayjs'
-import axios from 'axios'
+import api from '@/services/api'
 export default {
   name: 'Home',
   components: {
@@ -102,7 +99,7 @@ export default {
   },
   methods: {
     loadGuildStatsAsync() {
-      axios.get('https://api.tinyarmy.org/v1/guild/stats').then(r => {
+      api.guildStats().then(r => {
         if (r.data) {
           this.members = r.data.current.members
           this.gold = r.data.current.gold
@@ -134,7 +131,7 @@ export default {
               position: 'left',
               ticks: {
                 padding: 20,
-                fontColor: '#9a9a9a',
+                fontColor: '#9a9a9a'
               }
             }
           ]

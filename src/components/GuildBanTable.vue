@@ -72,16 +72,10 @@
 </template>
 
 <script>
-import axios from 'axios'
+import api from '@/services/api'
 
 export default {
   name: 'GuildBanTable',
-  props: {
-    dataUrl: {
-      type: String,
-      default: null
-    }
-  },
   data() {
     return {
       members: [],
@@ -91,8 +85,7 @@ export default {
   methods: {
     loadMembersAsync() {
       this.isLoading = true
-      axios
-        .get(`${this.dataUrl}`)
+      api.banList()
         .then(r => {
           if (r.data) {
             this.members = r.data

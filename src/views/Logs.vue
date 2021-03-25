@@ -9,9 +9,7 @@
         title="Log Entries"
         icon="format-list-bulleted-square"
       >
-        <guild-log-table
-          :data-url="`https://api.tinyarmy.org/v1/guild/${$route.params.guid}/log`"
-        />
+        <guild-log-table :guild="$route.params.guid" />
       </card-component>
     </section>
   </div>

@@ -9,9 +9,7 @@
         title="Guild Members"
         icon="format-list-bulleted-square"
       >
-        <guild-member-table
-          :data-url="`https://api.tinyarmy.org/v1/guild/${$route.params.guid}/members`"
-        />
+        <guild-member-table :guild="$route.params.guid" />
       </card-component>
     </section>
   </div>

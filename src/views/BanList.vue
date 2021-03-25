@@ -9,9 +9,7 @@
         title="Ban List"
         icon="format-list-bulleted-square"
       >
-        <guild-ban-table
-          :data-url="`https://api.tinyarmy.org/v1/members/banned`"
-        />
+        <guild-ban-table/>
       </card-component>
     </section>
   </div>
