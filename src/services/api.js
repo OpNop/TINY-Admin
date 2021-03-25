@@ -20,6 +20,20 @@ apiClient.interceptors.request.use(async function (request) {
   }
 
   // Fetch JWT token and check its expiration 
+  // let token = localStorage.getItem('token');
+  // console.log(`Token is: ${token.substr(token.length - 7)}`)
+  // try {
+  //   token = !jwt.isExpired(token) ? token : (await apiClient.post('/auth/refresh_token').data.token);
+  //   console.log(`newToken is: ${token.substr(token.length - 7)}`)
+  //   //request.headers.common["Authorization"] = token;
+  //   Vue.http.headers.common['Authorization'] = token
+  //   localStorage.setItem('token', token);
+  //   return request;
+  // } catch (error) {
+  //   localStorage.removeItem("token");
+  //   window.Location = "/login";
+  //   return Promise.reject(request);
+  // }
   let token = localStorage.getItem('token');
 
   if (jwt.isExpired(token)) {
@@ -83,6 +97,9 @@ export default {
   },
   banList() {
     return apiClient.get('/members/banned')
+  },
+  updateMember(data){
+    return apiClient.post('/members/update', data)
   }
 }
 

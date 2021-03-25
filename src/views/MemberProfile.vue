@@ -164,7 +164,37 @@ export default {
     },
     onUpdateDiscord() {
       if (this.discord == '' || /^((.{2,32})#\d{4})$/.test(this.discord)) {
-        //axios.post()
+        let data = {
+          account: this.account,
+          fields: {
+            discord: this.discord
+          }
+        }
+        api
+          .updateMember(data)
+          .then(() => {
+            this.$buefy.dialog.alert({
+              title: 'Discord Account Saves',
+              message: `Discord account for ${this.account} has been updated.`,
+              type: 'is-success',
+              hasIcon: true,
+              icon: 'check-circle',
+              ariaRole: 'alertdialog',
+              ariaModal: true
+            })
+          })
+          .catch((error) => {
+            this.$buefy.dialog.alert({
+          title: 'Server Error!',
+          message: `${error.response.data.error.message}`,
+          type: 'is-danger',
+          hasIcon: true,
+          icon: 'times-circle',
+          iconPack: 'fa',
+          ariaRole: 'alertdialog',
+          ariaModal: true
+        })
+          })
       } else {
         this.$buefy.dialog.alert({
           title: 'Invalid Discord Account',
@@ -179,7 +209,8 @@ export default {
       }
     },
     getUserInfo() {
-      api.getMember(this.account)
+      api
+        .getMember(this.account)
         .then(r => {
           // 2018-05-08 3:00 is date Pewpews Army was created
           if (dayjs(r.data.created).isBefore('2018-05-08', 'month')) {
