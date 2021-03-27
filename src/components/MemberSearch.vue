@@ -14,6 +14,7 @@
       expanded
       keep-first
       clearOnSelect
+      id="memberSearch"
     >
     </b-autocomplete>
   </b-field>

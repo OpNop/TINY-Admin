@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <div v-if="this.$router.currentRoute.name !== 'login'" class="is-flex-desktop is-flex-direction-column site">
+    <div
+      v-if="this.$router.currentRoute.name !== 'login'"
+      class="is-flex-desktop is-flex-direction-column site"
+    >
       <nav-bar />
       <aside-menu :menu="menu" />
       <router-view class="site__content" :key="$route.fullPath" />
@@ -161,6 +164,23 @@ export default {
         ]
       ]
     }
+  },
+  methods:{
+    focusSearch() {
+      document.getElementById("memberSearch").focus();
+    }
+  },
+  mounted() {
+    this._keyListener = function(e) {
+      if (e.key === '/') {
+        e.preventDefault()
+        this.focusSearch()
+      }
+    }
+    document.addEventListener('keydown', this._keyListener.bind(this))
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this._keyListener)
   }
 }
 </script>
