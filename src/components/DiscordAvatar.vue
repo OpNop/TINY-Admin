@@ -8,6 +8,9 @@
           v-model="id"
           placeholder="Discord ID"
           class="level-item"
+          @keyup.enter.native="save"
+          @keyup.esc.native="cancel"
+          autofocus
         />
       </div>
       <div class="level-right">
