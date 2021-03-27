@@ -39,13 +39,10 @@ apiClient.interceptors.request.use(async function (request) {
   if (jwt.isExpired(token)) {
     // Try and refresh token
     const refresh = await apiClient.post('/auth/refresh_token')
-    console.log(`🛑 Token expited! Refreshing`)
     if (refresh.status == 200) {
       token = refresh.data.token
       localStorage.setItem('token', token);
       request.headers.common["Authorization"] = token;
-      console.log(`Sending request to ${request.url}`)
-      console.log(`With token: ...${token.substr(token.length - 7)}`)
       return request
     } else {
       localStorage.removeItem('token')
@@ -55,8 +52,6 @@ apiClient.interceptors.request.use(async function (request) {
   } else {
     //Token is valid, send away
     request.headers.common["Authorization"] = token;
-    console.log(`Sending request to ${request.url}`)
-    console.log(`With token: ...${token.substr(token.length - 7)}`)
     return request
   }
 })
