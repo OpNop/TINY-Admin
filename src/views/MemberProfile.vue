@@ -31,28 +31,7 @@
                     {{ created }}
                   </b-field>
                   <b-field label="Discord Account">
-                    <inline-text-editor
-                      :value.sync="discord"
-                      placeholder="Click to add..."
-                      @update="onUpdateDiscord"
-                      :validatorCb="ValidateDiscordUser"
-                    >
-                      <b-icon
-                        slot="edit-label"
-                        icon="pencil"
-                        size="is-small"
-                      ></b-icon>
-                      <b-icon
-                        slot="confirm-label"
-                        icon="content-save"
-                        size="is-small"
-                      ></b-icon>
-                      <b-icon
-                        slot="cancel-label"
-                        icon="cancel"
-                        size="is-small"
-                      ></b-icon>
-                    </inline-text-editor>
+                    <discord-avatar :account="account" />
                   </b-field>
                 </card-component>
               </div>
@@ -77,7 +56,7 @@
                     v-for="guild in guilds"
                     :key="guild.guild_guid"
                   >
-                    <figure class="media-left">
+                    <figure class="media-left image is-64x64">
                       <user-guild
                         :guild="guild.guild_guid"
                         class="image has-max-width"
@@ -116,12 +95,12 @@
 <script>
 import api from '@/services/api'
 import dayjs from 'dayjs'
-import InlineTextEditor from '@/components/InlineTextEditor'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import UserGuild from '@/components/UserGuild'
 import GuildLogTable from '@/components/GuildLogTable'
+import DiscordAvatar from '@/components/DiscordAvatar'
 
 dayjs.extend(advancedFormat)
 
@@ -132,16 +111,18 @@ export default {
     CardComponent,
     TitleBar,
     GuildLogTable,
-    InlineTextEditor
+    DiscordAvatar
   },
   data() {
     return {
       account: null,
-      discord: '',
+      discord: {},
       created: '',
       guilds: [],
       is_banned: false,
-      ban_data: ''
+      ban_data: '',
+      is_editing: false,
+      origDiscord: ''
     }
   },
   computed: {
@@ -154,60 +135,6 @@ export default {
     this.getUserInfo()
   },
   methods: {
-    ValidateDiscordUser(value) {
-      // Only allow empty or name#1234
-      if (value == '' || /^((.{2,32})#\d{4})$/.test(value)) {
-        return true
-      } else {
-        return 'Invalid discord username'
-      }
-    },
-    onUpdateDiscord() {
-      if (this.discord == '' || /^((.{2,32})#\d{4})$/.test(this.discord)) {
-        let data = {
-          account: this.account,
-          fields: {
-            discord: this.discord
-          }
-        }
-        api
-          .updateMember(data)
-          .then(() => {
-            this.$buefy.dialog.alert({
-              title: 'Discord Account Saves',
-              message: `Discord account for ${this.account} has been updated.`,
-              type: 'is-success',
-              hasIcon: true,
-              icon: 'check-circle',
-              ariaRole: 'alertdialog',
-              ariaModal: true
-            })
-          })
-          .catch((error) => {
-            this.$buefy.dialog.alert({
-          title: 'Server Error!',
-          message: `${error.response.data.error.message}`,
-          type: 'is-danger',
-          hasIcon: true,
-          icon: 'times-circle',
-          iconPack: 'fa',
-          ariaRole: 'alertdialog',
-          ariaModal: true
-        })
-          })
-      } else {
-        this.$buefy.dialog.alert({
-          title: 'Invalid Discord Account',
-          message: `The account <b>${this.discord}</b> does not seem to be a valid discord account name.`,
-          type: 'is-danger',
-          hasIcon: true,
-          icon: 'times-circle',
-          iconPack: 'fa',
-          ariaRole: 'alertdialog',
-          ariaModal: true
-        })
-      }
-    },
     getUserInfo() {
       api
         .getMember(this.account)
