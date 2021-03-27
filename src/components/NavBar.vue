@@ -1,14 +1,14 @@
 <template>
   <nav v-show="isNavBarVisible" id="navbar-main" class="navbar is-fixed-top">
-    <div class="navbar-brand">
+    <div class="navbar-brand make-bigly">
       <a
         class="navbar-item is-hidden-desktop"
         @click.prevent="menuToggleMobile"
       >
         <b-icon :icon="menuToggleMobileIcon" />
       </a>
-      <div class="navbar-item field has-control no-left-space-touch">
-        <member-search />
+      <div class="navbar-item field has-control no-left-space-touch make-bigly">
+        <member-search class="make-bigly"/>
       </div>
     </div>
     <div class="navbar-brand is-right">
@@ -20,7 +20,7 @@
       </a>
     </div>
     <div
-      class="navbar-menu fadeIn animated faster"
+      class="navbar-menu fadeIn animated faster make-small"
       :class="{ 'is-active': isMenuNavBarActive }"
     >
       <div class="navbar-end">

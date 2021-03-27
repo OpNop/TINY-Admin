@@ -35,3 +35,13 @@
 .site__content {
   flex: 1;
 }
+
+.make-bigly {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.make-small {
+  flex-grow: 0;
+  flex-shrink: 1;
+}
