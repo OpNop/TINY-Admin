@@ -90,6 +90,9 @@ export default {
   getMember(account) {
     return apiClient.get(`members/${account}`)
   },
+  getDiscord(account) {
+    return apiClient.get(`members/${account}/discord`)
+  },
   banList() {
     return apiClient.get('/members/banned')
   },
