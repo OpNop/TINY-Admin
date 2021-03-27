@@ -55,7 +55,7 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-    }, 500),
+    }, 200),
 
     gotToUser(account) {
       if (account) {
