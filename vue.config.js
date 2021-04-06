@@ -10,6 +10,7 @@ module.exports = {
       msTileImage: 'favicon/mstile-150x150.png'
     },
   },
+  productionSourceMap: false,
   publicPath: process.env.DEPLOY_ENV === 'GH_PAGES' ?
     '/admin-one-vue-bulma-dashboard/' :
     '/',
