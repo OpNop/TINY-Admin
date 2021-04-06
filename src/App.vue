@@ -64,6 +64,11 @@ export default {
             to: '/ban',
             icon: 'account-cancel',
             label: 'Ban List'
+          },
+          {
+            to: '/logs',
+            icon: 'format-list-bulleted-square',
+            label: 'All Logs'
           }
         ],
         'Guilds',

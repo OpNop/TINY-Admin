@@ -31,6 +31,15 @@
       >
         {{ props.row.message }}
       </b-table-column>
+      <b-table-column
+        v-if="!guild"
+        label="Guild"
+        field="guild_name"
+        sortable
+        v-slot="props"
+      >
+        {{ props.row.guild_name }}
+      </b-table-column>
       <b-table-column label="Type" field="type" sortable v-slot="props">
         {{ props.row.type }}
       </b-table-column>
@@ -97,7 +106,8 @@ export default {
       }
       params = params.join('&')
       this.isLoading = true
-      api.getLogs(params, this.guild)
+      api
+        .getLogs(params, this.guild)
         .then(r => {
           if (r.data) {
             this.PageTotal = r.data.PageTotal

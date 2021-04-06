@@ -29,7 +29,16 @@ const routes = [{
     },
     path: '/ban',
     name: 'ban',
-    component: () => import( /* webpackChunkName: "members" */ '../views/BanList.vue')
+    component: () => import( /* webpackChunkName: "banlist" */ '../views/BanList.vue')
+  },
+  {
+    meta: {
+      title: 'All Logs',
+      requiresAuth: true
+    },
+    path: '/logs',
+    name: 'logs',
+    component: () => import( /* webpackChunkName: "logs" */ '../views/Logs.vue')
   },
   {
     meta: {
@@ -77,7 +86,7 @@ const routes = [{
     },
     path: '/member/:account',
     name: 'member.view',
-    component: () => import( /* webpackChunkName: "client-form" */ '../views/MemberProfile.vue'),
+    component: () => import( /* webpackChunkName: "member-profile" */ '../views/MemberProfile.vue'),
     props: true
   },
   {
