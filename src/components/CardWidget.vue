@@ -5,8 +5,8 @@
         <div class='is-widget-label'>
           <h3 class='subtitle is-spaced'>{{ label }}</h3>
           <h1 class='title'>
-            <growing-number v-show='!isGold' :value='number' :prefix='prefix' :suffix='suffix' />
-            <gw-gold v-show='!!isGold' :value='number'/>
+            <gw-gold v-if='isGold' :value='number'/>
+            <growing-number v-else :value='number' :prefix='prefix' :suffix='suffix' />
           </h1>
         </div>
       </div>

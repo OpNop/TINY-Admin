@@ -1,8 +1,8 @@
 <template>
   <div>
-    <span v-if='gw2.g'>{{gw2.g}}<img src='https://render.guildwars2.com/file/090A980A96D39FD36FBB004903644C6DBEFB1FFB/156904.png'/> </span>
-    <span v-if='gw2.s'>{{gw2.s}}<img src='https://render.guildwars2.com/file/E5A2197D78ECE4AE0349C8B3710D033D22DB0DA6/156907.png'/> </span>
-    <span v-if='gw2.c'>{{gw2.c}}<img src='https://render.guildwars2.com/file/6CF8F96A3299CFC75D5CC90617C3C70331A1EF0E/156902.png'/> </span>
+    <span v-if='gw2.gold'>{{gw2.gold}}<img src='https://render.guildwars2.com/file/090A980A96D39FD36FBB004903644C6DBEFB1FFB/156904.png'/> </span>
+    <span v-if='gw2.silver'>{{gw2.silver}}<img src='https://render.guildwars2.com/file/E5A2197D78ECE4AE0349C8B3710D033D22DB0DA6/156907.png'/> </span>
+    <span v-if='gw2.copper'>{{gw2.copper}}<img src='https://render.guildwars2.com/file/6CF8F96A3299CFC75D5CC90617C3C70331A1EF0E/156902.png'/> </span>
   </div>
 </template>
 
@@ -27,14 +27,14 @@ export default {
   },
   computed: {
     gw2() {
-      const c = this.newValue % 100,
-        s = ~~((this.newValue % 10000) / 100),
-        g = ~~((this.newValue % 100000000) / 10000);
-        return {
-          g:g,
-          s:s,
-          c
-        }
+      let gold = Math.floor(this.newValue / 1e4),
+          silver = Math.floor((this.newValue - gold * 1e4) / 100),
+          copper = this.newValue - gold * 1e4 - silver * 100;
+      return {
+        gold: gold,
+        silver: silver,
+        copper: copper
+      }
     },
   },
   watch: {
