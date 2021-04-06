@@ -1,8 +1,6 @@
 import axios from 'axios'
-import {
-  VueEasyJwt
-} from "vue-easy-jwt"
-const jwt = new VueEasyJwt()
+import AuthRefresh from 'axios-auth-refresh';
+import Router from '@/router'
 
 const apiClient = axios.create({
   baseURL: 'https://api.tinyarmy.org/v1',
@@ -13,49 +11,30 @@ const apiClient = axios.create({
   }
 })
 
-apiClient.interceptors.request.use(async function (request) {
-  // Anything to /auth does not need auth
-  if (request.url.includes('auth/')) {
-    return request
+const refreshAuthLogic = failedRequest =>
+  apiClient.post('/auth/refresh_token')
+  .then(tokenRefreshResponse => {
+    localStorage.setItem('token', tokenRefreshResponse.data.token);
+    failedRequest.response.config.headers['Authorization'] = tokenRefreshResponse.data.token;
+    return Promise.resolve();
+  });
+
+apiClient.interceptors.request.use(request => {
+  request.headers['Authorization'] = `${localStorage.getItem('token')}`;
+  return request;
+});
+
+apiClient.interceptors.response.use(function(response) {
+  return response;
+}, function(error) {
+  if (error.response.config.url.includes('/auth/refresh_token')) {
+    localStorage.removeItem('token');
+    Router.go('/login');
   }
+  return Promise.reject(error);
+});
 
-  // Fetch JWT token and check its expiration 
-  // let token = localStorage.getItem('token');
-  // console.log(`Token is: ${token.substr(token.length - 7)}`)
-  // try {
-  //   token = !jwt.isExpired(token) ? token : (await apiClient.post('/auth/refresh_token').data.token);
-  //   console.log(`newToken is: ${token.substr(token.length - 7)}`)
-  //   //request.headers.common["Authorization"] = token;
-  //   Vue.http.headers.common['Authorization'] = token
-  //   localStorage.setItem('token', token);
-  //   return request;
-  // } catch (error) {
-  //   localStorage.removeItem("token");
-  //   window.Location = "/login";
-  //   return Promise.reject(request);
-  // }
-  let token = localStorage.getItem('token');
-
-  if (jwt.isExpired(token)) {
-    // Try and refresh token
-    const refresh = await apiClient.post('/auth/refresh_token')
-    if (refresh.status == 200) {
-      token = refresh.data.token
-      localStorage.setItem('token', token);
-      request.headers.common["Authorization"] = token;
-      return request
-    } else {
-      localStorage.removeItem('token')
-      window.Location = "/login"
-      return Promise.reject(request)
-    }
-  } else {
-    //Token is valid, send away
-    request.headers.common["Authorization"] = token;
-    return request
-  }
-})
-
+AuthRefresh(apiClient, refreshAuthLogic);
 
 export default {
   // Auth
@@ -63,7 +42,7 @@ export default {
     return apiClient.post('/auth/login', api_key)
   },
   refresh_token() {
-    return apiClient.get('/auth/refresh_token')
+    return apiClient.post('/auth/refresh_token')
   },
 
   // Guild
@@ -96,60 +75,7 @@ export default {
   banList() {
     return apiClient.get('/members/banned')
   },
-  updateMember(data){
+  updateMember(data) {
     return apiClient.post('/members/update', data)
   }
 }
-
-
-/*
-import Vue from 'vue'
-import axios from 'axios'
-import store from '../store'
-import {
-  VueEasyJwt
-} from "vue-easy-jwt";
-const jwt = new VueEasyJwt();
-
-
-export default () => {
-  // Setup options
-  const options = {
-    baseURL: 'https://api.tinyarmy.org/v1/',
-    headers: {
-      Authorization: this.$store.state.token
-    },
-    withCredentials: true
-  };
-
-  // Create Instance
-  const instance = axios.create(options);
-
-  // Check JWT before each request
-  instance.interceptors.request.use(request => {
-
-    if (!request.url.includes('/auth')) {
-      const token = this.$store.state.token;
-
-      if (jwt.isExpired(token)) {
-        //try and refresh token
-        axios.post('auth/refresh_token')
-          .then((resp) => {
-            localStorage.setItem('token', resp.data.token);
-            instance.headers.common['Authorization'] = resp.data.token
-            return request;
-          })
-          .catch(() => {
-            localStorage.removeItem('token')
-            this.$router.push('/login')
-          })
-      }
-    }
-    return request;
-  }, error => {
-    return Promise.reject(error);
-  });
-
-  return instance;
-};
-*/
