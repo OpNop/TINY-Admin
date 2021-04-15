@@ -45,3 +45,9 @@
   flex-grow: 0;
   flex-shrink: 1;
 }
+
+.b-tabs, .tabs ul{
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid rgba(24, 28, 33, 0.06);
+}

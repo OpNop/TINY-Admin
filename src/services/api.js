@@ -77,5 +77,11 @@ export default {
   },
   updateMember(data) {
     return apiClient.post('/members/update', data)
+  },
+  getUserNotes(account) {
+    return apiClient.get(`/members/${account}/notes`)
+  },
+  addUserNote(account, data) {
+    return apiClient.post(`/members/${account}/notes`, data)
   }
 }
