@@ -1,6 +1,6 @@
 <template>
-  <div class="is-user-avatar">
-    <img :src="getEmblem" />
+  <div class="is-user-avatar">   
+      <img :src="getEmblem" />
   </div>
 </template>
 
@@ -11,10 +11,6 @@ export default {
     guild: {
       type: String,
       default: null
-    },
-    rank: {
-      type: String,
-      default: "Almost Tiny"
     }
   },
   computed: {

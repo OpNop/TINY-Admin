@@ -51,3 +51,7 @@
   border-radius: 6px;
   border: 1px solid rgba(24, 28, 33, 0.06);
 }
+
+.label:not(:last-child) {
+  margin-bottom: 0;
+}

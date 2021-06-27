@@ -53,11 +53,11 @@
               :key="guild.guild_guid"
             >
               <figure class="media-left image is-64x64">
-                <user-guild
-                  :guild="guild.guild_guid"
-                  class="image has-max-width"
-                />
+                <b-tooltip :label="guild.guild_name" type="is-dark">
+                  <user-guild :guild="guild.guild_guid" class="image has-max-width" />
+                </b-tooltip>
               </figure>
+
               <div class="media-content">
                 <div class="content">
                   <b-field label="Rank">
@@ -80,11 +80,20 @@
             <b-tab-item>
               <template #header>
                 <b-icon icon="email"></b-icon>
-                <span> Notes <b-tag v-if="user_notes.length > 0" type="is-danger" rounded> {{user_notes.length}} </b-tag> </span>
-            </template>
+                <span>
+                  Notes
+                  <b-tag v-if="user_notes.length > 0" type="is-danger" rounded>
+                    {{ user_notes.length }}
+                  </b-tag>
+                </span>
+              </template>
               <div class="notification">
                 <b-field label="Message">
-                  <b-input rows="3" type="textarea" v-model="new_note"></b-input>
+                  <b-input
+                    rows="3"
+                    type="textarea"
+                    v-model="new_note"
+                  ></b-input>
                 </b-field>
                 <b-field>
                   <p class="control">
@@ -98,7 +107,11 @@
                 </b-field>
               </div>
               <div class="box" v-if="user_notes.length > 0">
-                <article v-for="note in user_notes" :key="note.date_created" class="media">
+                <article
+                  v-for="note in user_notes"
+                  :key="note.date_created"
+                  class="media"
+                >
                   <div class="media-left">
                     <figure class="image is-64x64">
                       <b-image
@@ -111,11 +124,13 @@
                   <div class="media-content">
                     <div class="content">
                       <p>
-                        <strong>{{note.creator}}</strong>
-                        <small> {{formatDate(note.date_created)}}</small>
+                        <strong>{{ note.creator }}</strong>
+                        <small>
+                          <date-format :date="note.date_created"
+                        /></small>
                         <br />
                         <vue-markdown>
-                          {{note.message}}
+                          {{ note.message }}
                         </vue-markdown>
                       </p>
                     </div>
@@ -148,7 +163,7 @@ export default {
     TitleBar,
     GuildLogTable,
     DiscordAvatar,
-    VueMarkdown
+    VueMarkdown,
     DateFormat
   },
   data() {
