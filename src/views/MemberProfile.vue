@@ -25,7 +25,7 @@
               {{ account }}
             </b-field>
             <b-field label="Original Join Date">
-              {{ created }}
+              <date-format :date="created" />
             </b-field>
             <b-field label="Discord Account">
               <discord-avatar :account="account" />
@@ -64,7 +64,7 @@
                     {{ guild.guild_rank }}
                   </b-field>
                   <b-field label="Date Joined">
-                    {{ formatDate(guild.date_joined) }}
+                    <date-format :date="guild.date_joined" />
                   </b-field>
                 </div>
               </div>
@@ -132,18 +132,13 @@
 
 <script>
 import api from '@/services/api'
-import dayjs from 'dayjs'
-import advancedFormat from 'dayjs/plugin/advancedFormat'
-import utc from 'dayjs/plugin/utc'
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
 import UserGuild from '@/components/UserGuild'
 import GuildLogTable from '@/components/GuildLogTable'
 import DiscordAvatar from '@/components/DiscordAvatar'
 import VueMarkdown from 'vue-markdown'
-
-dayjs.extend(advancedFormat)
-dayjs.extend(utc)
+import DateFormat from '@/components/DateFormat'
 
 export default {
   name: 'MemberProfile',
@@ -154,6 +149,7 @@ export default {
     GuildLogTable,
     DiscordAvatar,
     VueMarkdown
+    DateFormat
   },
   data() {
     return {
@@ -186,13 +182,7 @@ export default {
       api
         .getMember(this.account)
         .then(r => {
-          // 2018-05-08 3:00 is date Pewpews Army was created
-          if (dayjs(r.data.created).isBefore('2018-05-08', 'month')) {
-            this.created = 'Data Lost'
-          } else {
-            this.created = this.formatDate(r.data.created)
-          }
-
+          this.created = r.data.created
           this.discord = r.data.discord
           this.guilds = r.data.guilds
           this.is_banned = r.data.is_banned
@@ -229,9 +219,6 @@ export default {
         //do popup
       }
       this.is_saving_note = false;
-    },
-    formatDate(date) {
-      return dayjs.utc(date).local().format('MMM Do, YYYY h:mm A')
     }
   }
 }

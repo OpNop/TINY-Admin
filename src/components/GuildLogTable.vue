@@ -44,7 +44,7 @@
         {{ props.row.type }}
       </b-table-column>
       <b-table-column label="Date" field="date" sortable v-slot="props">
-        {{ props.row.date }}
+        <date-format :date="props.row.date" />
       </b-table-column>
 
       <section slot="empty" class="section">
@@ -69,9 +69,13 @@
 
 <script>
 import api from '@/services/api'
+import DateFormat from '@/components/DateFormat'
 
 export default {
   name: 'GuildLogTable',
+  components: {
+    DateFormat
+  },
   props: {
     guild: {
       type: String,
@@ -97,7 +101,7 @@ export default {
   },
   methods: {
     loadLogsAsync() {
-      let params = [`limit=${this.perPage}`, `page=${this.page}`]
+      let params = [`limit=${this.perPage}`, `page=${this.page}`, 'v2=true']
       if (this.account !== null) {
         params.push(`account=${this.account}`)
       }

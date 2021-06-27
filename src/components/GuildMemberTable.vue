@@ -61,7 +61,7 @@
         sortable
         v-slot="props"
       >
-        {{ props.row.date_joined }}
+        <date-format :date="props.row.date_joined" />
       </b-table-column>
       <b-table-column
         custom-key="actions"
@@ -110,9 +110,13 @@
 
 <script>
 import api from '@/services/api'
+import DateFormat from '@/components/DateFormat'
 
 export default {
   name: 'GuildMemberTable',
+  components: {
+    DateFormat
+  },
   props: {
     guild: {
       type: String,
