@@ -69,6 +69,11 @@ export default {
             to: '/logs',
             icon: 'format-list-bulleted-square',
             label: 'All Logs'
+          },
+          {
+            to: '/welcome',
+            icon: 'email-plus-outline',
+            label: 'Welcome Messages'
           }
         ],
         'Guilds',

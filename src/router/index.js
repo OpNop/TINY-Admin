@@ -42,6 +42,15 @@ const routes = [{
   },
   {
     meta: {
+      title: 'Welcome Messages',
+      requiresAuth: true
+    },
+    path: '/welcome',
+    name: 'welcome',
+    component: () => import( /* webpackChunkName: "welcome" */ '../views/WelcomeMessages.vue')
+  },
+  {
+    meta: {
       title: 'Members',
       requiresAuth: true
     },
