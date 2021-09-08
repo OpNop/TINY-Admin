@@ -29,7 +29,8 @@
         width="auto"
         v-slot="props"
       >
-        {{ props.row.message }}
+      <!-- note to self, make a component called parseLogEntry -->
+        <log-message :message="props.row.raw" />
       </b-table-column>
       <b-table-column
         v-if="!guild"
@@ -70,11 +71,13 @@
 <script>
 import api from '@/services/api'
 import DateFormat from '@/components/DateFormat'
+import LogMessage from '@/components/LogMessage'
 
 export default {
   name: 'GuildLogTable',
   components: {
-    DateFormat
+    DateFormat,
+    LogMessage
   },
   props: {
     guild: {
