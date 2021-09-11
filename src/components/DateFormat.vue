@@ -24,7 +24,9 @@ export default {
   computed: {
     formatedDate() {
       // 2018-05-08 3:00 is date Pewpews Army was created
-      if (dayjs(this.date).isBefore('2018-05-08', 'month')) {
+      // Changed to GW2 launch date for character creation support
+      // Launch date was August 28, 2012
+      if (dayjs(this.date).isBefore('2012-01-01', 'month')) {
         return 'Data Lost'
       } else {
         return dayjs
