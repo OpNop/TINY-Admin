@@ -76,7 +76,9 @@
             <b-tab-item label="Logs" icon="format-list-bulleted-square">
               <guild-log-table :account="account" />
             </b-tab-item>
-            <!-- <b-tab-item label="Characters" icon="account-multiple"></b-tab-item> -->
+            <b-tab-item v-if="characters.length > 0" label="Characters" icon="account-multiple">
+              <character-list :characters="characters" />
+            </b-tab-item>
             <b-tab-item>
               <template #header>
                 <b-icon icon="email"></b-icon>
@@ -149,6 +151,7 @@
 import api from '@/services/api'
 import TitleBar from '@/components/TitleBar'
 import CardComponent from '@/components/CardComponent'
+import CharacterList from '@/components/CharacterList'
 import UserGuild from '@/components/UserGuild'
 import GuildLogTable from '@/components/GuildLogTable'
 import DiscordAvatar from '@/components/DiscordAvatar'
@@ -160,6 +163,7 @@ export default {
   components: {
     UserGuild,
     CardComponent,
+    CharacterList,
     TitleBar,
     GuildLogTable,
     DiscordAvatar,
@@ -174,6 +178,7 @@ export default {
       guilds: [],
       is_banned: false,
       ban_data: '',
+      characters: [],
       is_editing: false,
       origDiscord: '',
       //Notes Tab
@@ -202,6 +207,7 @@ export default {
           this.guilds = r.data.guilds
           this.is_banned = r.data.is_banned
           if (this.is_banned) this.ban_data = r.data.ban_reason
+          this.characters = r.data.characters
         })
         .catch(error => {
           this.data = []
