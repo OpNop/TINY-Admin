@@ -63,30 +63,6 @@
       >
         <date-format :date="props.row.date_joined" />
       </b-table-column>
-      <b-table-column
-        custom-key="actions"
-        class="is-actions-cell"
-        v-slot="props"
-      >
-        <div class="buttons is-right">
-          <router-link
-            :to="{
-              name: 'member.view',
-              params: { account: props.row.account },
-            }"
-            class="button is-small is-primary"
-          >
-            <b-icon icon="account-edit" size="is-small" />
-          </router-link>
-          <button
-            class="button is-small is-danger"
-            type="button"
-            @click.prevent="trashModal(props.row)"
-          >
-            <b-icon icon="trash-can" size="is-small" />
-          </button>
-        </div>
-      </b-table-column>
 
       <section slot="empty" class="section">
         <div class="content has-text-grey has-text-centered">
