@@ -85,11 +85,11 @@
 </template>
 
 <script>
-import api from '@/services/api'
-import DateFormat from '@/components/DateFormat'
+import api from "@/services/api";
+import DateFormat from "@/components/DateFormat";
 
 export default {
-  name: 'GuildMemberTable',
+  name: "GuildMemberTable",
   components: {
     DateFormat
   },
@@ -114,9 +114,9 @@ export default {
       page: 1,
       perPage: 20,
       checkedRows: [],
-      sortField: 'date_joined',
-      sortOrder: 'desc'
-    }
+      sortField: "date_joined",
+      sortOrder: "desc"
+    };
   },
   methods: {
     loadMembersAsync() {
@@ -125,7 +125,7 @@ export default {
         `page=${this.page}`,
         `sort_by=${this.sortField}`,
         `order_by=${this.sortOrder}`
-      ].join('&')
+      ].join("&");
       // if (this.account !== undefined) {
       //   params.push(`account=${this.account}`)
       // }
@@ -133,43 +133,44 @@ export default {
       //   params.push(`account=${this.type}`)
       // }
       // params = params.join('&')
-      this.isLoading = true
-      api.getMembers(params, this.guild)
+      this.isLoading = true;
+      api
+        .getMembers(params, this.guild)
         .then(r => {
           if (r.data) {
-            this.PageTotal = r.data.PageTotal
-            this.PageSize = r.data.PageSize
-            this.ResultCount = r.data.ResultCount
-            this.ResultTotal = r.data.ResultTotal
-            this.members = r.data.members
-            this.isLoading = false
+            this.PageTotal = r.data.PageTotal;
+            this.PageSize = r.data.PageSize;
+            this.ResultCount = r.data.ResultCount;
+            this.ResultTotal = r.data.ResultTotal;
+            this.members = r.data.members;
+            this.isLoading = false;
           }
         })
         .catch(error => {
-          this.PageTotal = 0
-          this.PageSize = 0
-          this.ResultCount = 0
-          this.ResultTotal = 0
-          this.members = []
-          this.isLoading = false
-        })
+          this.PageTotal = 0;
+          this.PageSize = 0;
+          this.ResultCount = 0;
+          this.ResultTotal = 0;
+          this.members = [];
+          this.isLoading = false;
+        });
     },
     onPageChange(page) {
-      this.page = page
-      this.loadMembersAsync()
+      this.page = page;
+      this.loadMembersAsync();
     },
     onPerPageChanged(perPage) {
-      this.perPage = perPage
-      this.loadMembersAsync()
+      this.perPage = perPage;
+      this.loadMembersAsync();
     },
     onSort(field, order) {
-      this.sortField = field
-      this.sortOrder = order
-      this.loadMembersAsync()
+      this.sortField = field;
+      this.sortOrder = order;
+      this.loadMembersAsync();
     }
   },
   mounted() {
-    this.loadMembersAsync()
+    this.loadMembersAsync();
   }
-}
+};
 </script>
