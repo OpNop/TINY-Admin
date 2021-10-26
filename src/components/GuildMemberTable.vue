@@ -21,7 +21,7 @@
         v-if="showGuild"
         v-slot="props"
       >
-        <div class="image">
+        <div class="image guild-image">
           <img
             :src="`https://emblem.werdes.net/emblem/${props.row.guild_guid}`"
             :alt="props.row.name"
