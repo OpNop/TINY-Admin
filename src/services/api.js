@@ -86,6 +86,9 @@ export default {
   getUserNotes(account) {
     return apiClient.get(`/members/${account}/notes`)
   },
+  getLatestNotes(limit) {
+    return apiClient.get(`/members/notes?limit=${limit}`)
+  },
   addUserNote(account, data) {
     return apiClient.post(`/members/${account}/notes`, data)
   }

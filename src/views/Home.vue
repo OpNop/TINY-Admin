@@ -55,15 +55,24 @@
               </line-chart>
             </div>
           </card-component>
+        <div class="columns is-multiline">
+          <div class="column is-three-fifths-widescreen is-full-tablet">
+            <card-component
+              title="New Members"
+              class="has-table has-mobile-sort-spaced"
+            >
+              <guild-member-table showGuild />
+            </card-component>
+          </div>
+          <div class="column is-two-fifths-widescreen is-full-tablet">
+            <card-component
+                title="Latest notes"
+                class="has-table has-mobile-sort-spaced"
+              >
+              <latest-notes />
+            </card-component>
+          </div>
         </div>
-      </card-component>
-
-      <card-component
-        title="New Members"
-        class="has-table has-mobile-sort-spaced"
-      >
-        <guild-member-table showGuild />
-      </card-component>
     </section>
   </div>
 </template>
@@ -79,6 +88,7 @@ import LineChart from "@/components/Charts/LineChart";
 import GuildMemberTable from "@/components/GuildMemberTable";
 import dayjs from "dayjs";
 import api from "@/services/api";
+import LatestNotes from '@/components/LatestNotes.vue';
 export default {
   name: "Home",
   components: {
@@ -87,7 +97,8 @@ export default {
     CardComponent,
     CardWidget,
     Tiles,
-    TitleBar
+    TitleBar,
+    LatestNotes
   },
   data() {
     return {
