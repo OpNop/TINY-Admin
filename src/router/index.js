@@ -54,8 +54,8 @@ const routes = [{
       title: 'Members',
       requiresAuth: true
     },
-    path: '/members/:guid',
-    name: 'tables',
+    path: '/:guid/members',
+    name: 'Members',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -66,7 +66,7 @@ const routes = [{
       title: 'Treasury',
       requiresAuth: true
     },
-    path: '/treasury/:guid',
+    path: '/:guid/treasury',
     name: 'Treasury',
     component: () => import( /* webpackChunkName: "treasury" */ '../views/Treasury.vue')
   },
@@ -75,7 +75,7 @@ const routes = [{
       title: 'Stash',
       requiresAuth: true
     },
-    path: '/stash/:guid',
+    path: '/:guid/stash',
     name: 'Stash',
     component: () => import( /* webpackChunkName: "stash" */ '../views/Stash.vue')
   },
@@ -84,7 +84,7 @@ const routes = [{
       title: 'Logs',
       requiresAuth: true
     },
-    path: '/logs/:guid',
+    path: '/:guid/logs',
     name: 'Logs',
     component: () => import( /* webpackChunkName: "logs" */ '../views/Logs.vue')
   },

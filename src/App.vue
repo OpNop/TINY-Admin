@@ -79,13 +79,13 @@ export default {
         'Guilds',
         [
           {
-            // to: '/tables',
+            // to: `/${this.guilds.pew.guid}`,
             label: "Pewpew's Army",
             icon: 'account-group',
             // updateMark: true,
             menu: [
               {
-                to: `/members/${this.guilds.pew.guid}`,
+                to: `/${this.guilds.pew.guid}/members`,
                 label: 'Members'
               },
               // {
@@ -97,7 +97,7 @@ export default {
               //   label: 'Stash'
               // },
               {
-                to: `/logs/${this.guilds.pew.guid}`,
+                to: `/${this.guilds.pew.guid}/logs`,
                 label: 'Logs'
               }
             ]
@@ -108,7 +108,7 @@ export default {
             icon: 'account-group',
             menu: [
               {
-                to: `/members/${this.guilds.taimi.guid}`,
+                to: `/${this.guilds.taimi.guid}/members`,
                 label: 'Members'
               },
               // {
@@ -120,7 +120,7 @@ export default {
               //   label: 'Stash'
               // },
               {
-                to: `/logs/${this.guilds.taimi.guid}`,
+                to: `/${this.guilds.taimi.guid}/logs`,
                 label: 'Logs'
               }
             ]
@@ -131,7 +131,7 @@ export default {
             icon: 'account-group',
             menu: [
               {
-                to: `/members/${this.guilds.sam.guid}`,
+                to: `/${this.guilds.sam.guid}/members`,
                 label: 'Members'
               },
               // {
@@ -143,7 +143,7 @@ export default {
               //   label: 'Stash'
               // },
               {
-                to: `/logs/${this.guilds.sam.guid}`,
+                to: `/${this.guilds.sam.guid}/logs`,
                 label: 'Logs'
               }
             ]
@@ -154,7 +154,7 @@ export default {
             icon: 'account-group',
             menu: [
               {
-                to: `/members/${this.guilds.plorrt.guid}`,
+                to: `/${this.guilds.plorrt.guid}/members`,
                 label: 'Members'
               },
               // {
@@ -166,7 +166,7 @@ export default {
               //   label: 'Stash'
               // },
               {
-                to: `/logs/${this.guilds.plorrt.guid}`,
+                to: `/${this.guilds.plorrt.guid}/logs`,
                 label: 'Logs'
               }
             ]
