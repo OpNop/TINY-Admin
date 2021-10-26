@@ -46,8 +46,8 @@ export default {
   },
 
   // Guild
-  guildStats() {
-    return apiClient.get('/guild/stats')
+  guildStats(statsLimit) {
+    return apiClient.get(`/guild/stats?limit=${statsLimit}`)
   },
   getMembers(params, guild) {
     if (guild)

@@ -27,22 +27,34 @@
           label="Bookah Ankles Stabbed"
         />
       </tiles>
-
-      <card-component
-        title="Performance"
-        icon="finance"
-        header-icon="reload"
-        @header-icon-click="loadGuildStatsAsync"
-      >
-        <div v-if="defaultChart.chartData" class="chart-area">
-          <line-chart
-            ref="bigChart"
-            style="height: 100%"
-            chart-id="big-line-chart"
-            :chart-data="defaultChart.chartData"
-            :extra-options="defaultChart.extraOptions"
+          <card-component
+            title="Performance"
+            icon="finance"
+            header-icon="reload"
+            @header-icon-click="loadGuildStatsAsync"
           >
-          </line-chart>
+            <div v-if="defaultChart.chartData" class="chart-area">
+              <b-field grouped group-multiline position="is-right">
+                <b-select @input="loadGuildStatsAsync()" v-model="statsLimit">
+                  <option value="7">1 Week</option>
+                  <option value="14">2 Weeks</option>
+                  <option value="21">3 Weeks</option>
+                  <option value="30">1 Month</option>
+                  <option value="90">3 Months</option>
+                  <option value="180">6 Months</option>
+                  <option value="365">1 year</option>
+                </b-select>
+              </b-field>
+              <line-chart
+                ref="bigChart"
+                style="height: 100%"
+                chart-id="big-line-chart"
+                :chart-data="defaultChart.chartData"
+                :extra-options="defaultChart.extraOptions"
+              >
+              </line-chart>
+            </div>
+          </card-component>
         </div>
       </card-component>
 
@@ -58,17 +70,17 @@
 
 <script>
 // @ is an alias to /src
-import * as chartConfig from '@/components/Charts/chart.config'
-import TitleBar from '@/components/TitleBar'
-import Tiles from '@/components/Tiles'
-import CardWidget from '@/components/CardWidget'
-import CardComponent from '@/components/CardComponent'
-import LineChart from '@/components/Charts/LineChart'
-import GuildMemberTable from '@/components/GuildMemberTable'
-import dayjs from 'dayjs'
-import api from '@/services/api'
+import * as chartConfig from "@/components/Charts/chart.config";
+import TitleBar from "@/components/TitleBar";
+import Tiles from "@/components/Tiles";
+import CardWidget from "@/components/CardWidget";
+import CardComponent from "@/components/CardComponent";
+import LineChart from "@/components/Charts/LineChart";
+import GuildMemberTable from "@/components/GuildMemberTable";
+import dayjs from "dayjs";
+import api from "@/services/api";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     GuildMemberTable,
     LineChart,
@@ -85,70 +97,71 @@ export default {
       },
       chartData: [],
       members: 0,
-      gold: 0
-    }
+      gold: 0,
+      statsLimit: 21
+    };
   },
   computed: {
     titleStack() {
-      return ['TINY', 'Dashboard']
+      return ["TINY", "Dashboard"];
     }
   },
   mounted() {
-    this.loadGuildStatsAsync()
+    this.loadGuildStatsAsync();
   },
   methods: {
     loadGuildStatsAsync() {
-      api.guildStats().then(r => {
+      api.guildStats(this.statsLimit).then(r => {
         if (r.data) {
-          this.members = r.data.current.members
-          this.gold = r.data.current.gold
-          this.chartData = r.data.historical
-          this.loadChart()
+          this.members = r.data.current.members;
+          this.gold = r.data.current.gold;
+          this.chartData = r.data.historical;
+          this.loadChart();
         }
-      })
+      });
     },
     loadChart() {
       this.defaultChart.extraOptions = {
         ...chartConfig.chartOptionsMain,
-        type: 'line',
+        type: "line",
         scales: {
           yAxes: [
             {
-              id: 'gold',
-              type: 'linear',
+              id: "gold",
+              type: "linear",
               offset: true,
-              position: 'right',
+              position: "right",
               gridLines: {
                 display: false
               }
             },
             {
-              id: 'members',
-              type: 'linear',
+              id: "members",
+              type: "linear",
               offset: true,
               grace: 1,
-              position: 'left',
+              position: "left",
               ticks: {
                 padding: 20,
-                fontColor: '#9a9a9a'
+                fontColor: "#9a9a9a"
               }
             }
           ]
         }
-      }
+      };
       this.defaultChart.chartData = {
-        labels: this.chartData.map(q => dayjs(q.time).format('MMM D')),
+        labels: this.chartData.map(q => dayjs(q.time).format("MMM D")),
         datasets: [
           {
-            label: 'Gold',
-            yAxisID: 'gold',
+            label: "Gold",
+            yAxisID: "gold",
             fill: false,
             borderColor: chartConfig.chartColors.default.gold,
             borderWidth: 2,
             borderDash: [],
             borderDashOffset: 0.0,
             pointBackgroundColor: chartConfig.chartColors.default.gold,
-            pointBorderColor: 'rgba(255,255,255,0)',
+            pointBorderColor: "rgba(255,255,255,0)",
             pointHoverBackgroundColor: chartConfig.chartColors.default.gold,
             pointBorderWidth: 20,
             pointHoverRadius: 4,
@@ -163,19 +176,19 @@ export default {
             borderDash: [],
             borderDashOffset: 0.0,
             pointBackgroundColor: chartConfig.chartColors.default.members,
-            pointBorderColor: 'rgba(255,255,255,0)',
+            pointBorderColor: "rgba(255,255,255,0)",
             pointHoverBackgroundColor: chartConfig.chartColors.default.members,
             pointBorderWidth: 20,
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            label: 'Members',
-            yAxisID: 'members',
+            label: "Members",
+            yAxisID: "members",
             data: this.chartData.map(q => q.members)
           }
         ]
-      }
-    },
+      };
+    }
   }
-}
+};
 </script>
