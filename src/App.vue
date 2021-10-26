@@ -57,7 +57,7 @@ export default {
         [
           {
             to: '/',
-            icon: 'desktop-mac',
+            icon: 'view-dashboard',
             label: 'Dashboard'
           },
           {
@@ -72,7 +72,7 @@ export default {
           },
           {
             to: '/welcome',
-            icon: 'email-plus-outline',
+            icon: 'human-greeting',
             label: 'Welcome Messages'
           }
         ],
@@ -86,7 +86,8 @@ export default {
             menu: [
               {
                 to: `/${this.guilds.pew.guid}/members`,
-                label: 'Members'
+                label: 'Members',
+                icon: 'blank',
               },
               // {
               //   to: `/treasury/${this.guilds.pew.guid}`,
@@ -98,7 +99,8 @@ export default {
               // },
               {
                 to: `/${this.guilds.pew.guid}/logs`,
-                label: 'Logs'
+                label: 'Logs',
+                icon: 'blank',
               }
             ]
           },
@@ -109,7 +111,8 @@ export default {
             menu: [
               {
                 to: `/${this.guilds.taimi.guid}/members`,
-                label: 'Members'
+                label: 'Members',
+                icon: 'blank',
               },
               // {
               //   to: `/treasury/${this.guilds.taimi.guid}`,
@@ -121,7 +124,8 @@ export default {
               // },
               {
                 to: `/${this.guilds.taimi.guid}/logs`,
-                label: 'Logs'
+                label: 'Logs',
+                icon: 'blank',
               }
             ]
           },
@@ -132,7 +136,8 @@ export default {
             menu: [
               {
                 to: `/${this.guilds.sam.guid}/members`,
-                label: 'Members'
+                label: 'Members',
+                icon: 'blank',
               },
               // {
               //   to: `/treasury/${this.guilds.sam.guid}`,
@@ -144,7 +149,8 @@ export default {
               // },
               {
                 to: `/${this.guilds.sam.guid}/logs`,
-                label: 'Logs'
+                label: 'Logs',
+                icon: 'blank',
               }
             ]
           },
@@ -155,7 +161,8 @@ export default {
             menu: [
               {
                 to: `/${this.guilds.plorrt.guid}/members`,
-                label: 'Members'
+                label: 'Members',
+                icon: 'blank',
               },
               // {
               //   to: `/treasury/${this.guilds.plorrt.guid}`,
@@ -167,7 +174,8 @@ export default {
               // },
               {
                 to: `/${this.guilds.plorrt.guid}/logs`,
-                label: 'Logs'
+                label: 'Logs',
+                icon: 'blank',
               }
             ]
           }
