@@ -62,6 +62,11 @@ export default {
       return apiClient.get(`/guild/logs?${params}`)
   },
 
+  //Search
+  searchAll(query) {
+    return apiClient.get(`search?q=${query}`)
+  },
+
   // Members
   findMember(account) {
     return apiClient.get(`members/search?account=${account}`)
