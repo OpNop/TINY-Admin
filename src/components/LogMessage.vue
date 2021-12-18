@@ -1,14 +1,18 @@
 <template>
   <div>
-    <router-link :to="{ name: 'member.view', params: { account: messageInfo.user } }">{{ messageInfo.user }}</router-link> {{messageInfo.message}}
+    <router-link :to="{ name: 'member.view', params: { account: messageInfo.user } }">{{ messageInfo.user }}</router-link> {{messageInfo.message}} <gw-gold v-if="messageInfo.is_coins" :small="true" :duration=0 :value="messageInfo.count" />
     <router-link v-if='messageInfo.other' :to="{ name: 'member.view', params: { account: messageInfo.other } }">{{ messageInfo.other }}</router-link>
     <span v-if='messageInfo.new_rank'> new rank: {{messageInfo.new_rank}}</span>
   </div>
 </template>
 
 <script>
+import GwGold from '@/components/GwGold'
 export default {
   name: 'LogMessage',
+  components: {
+    GwGold
+  },
   props: {
     message: Object,
   },
@@ -58,9 +62,11 @@ export default {
         else if (['treasury','stash'].includes(type)) {
           let action = operation === 'withdraw'?'withdrew':operation === 'deposit'? 'deposited':'moved';
           this.messageInfo = {
-            message: `${action} ${count} ${coins?'coins':item_name}`,
+            message: `${action} ${!coins?count:''} ${!coins?item_name:''}`,
             new_rank,
-            other: changed_by
+            other: changed_by,
+            is_coins: !!coins,
+            count: count
           }
         }
         this.messageInfo.user = user;
