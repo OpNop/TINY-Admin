@@ -39,7 +39,7 @@ export default {
           guid: '7D0DB7CC-02FE-E911-81AA-A77AA130EAB8'
         },
         plorrt: {
-          name: "Plorrt's Tiny Army",
+          name: "Booboo's Tiny Army",
           guid: '4EC8BEAF-B669-EB11-81AC-95DFE50946EB'
         }
       }
@@ -156,7 +156,7 @@ export default {
           },
           {
             // to: '/profile',
-            label: "Plorrt's Army",
+            label: "Booboo's Army",
             icon: 'account-group',
             menu: [
               {
