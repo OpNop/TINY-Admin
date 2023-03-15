@@ -91,5 +91,8 @@ export default {
   },
   addUserNote(account, data) {
     return apiClient.post(`/members/${account}/notes`, data)
+  },
+  refreshCharacters(account) {
+    return apiClient.get(`members/${account}/characters/refresh`)
   }
 }
