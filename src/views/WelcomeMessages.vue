@@ -15,7 +15,7 @@ GUILD RATING of E10+
 
 LINKS
 Website  - https://tinyarmy.org
-Discord  - https://discord.gg/tinyarmy
+Discord  - https://discord.com/invite/mMURv8N
 
 Discord is the best place to keep updated
 with the guild and is HIGHLY recommended.">
