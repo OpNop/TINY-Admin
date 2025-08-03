@@ -30,6 +30,9 @@
             <b-field label="Original Join Date">
               <date-format :date="created" />
             </b-field>
+            <b-field label="Total Donations">
+              <gw-gold :value="totalGold" :duration=1 :small="true" />
+            </b-field>
             <b-field label="Discord Account">
               <discord-avatar :account="account" />
             </b-field>
@@ -193,6 +196,7 @@ import GuildLogTable from "@/components/GuildLogTable";
 import DiscordAvatar from "@/components/DiscordAvatar";
 import VueMarkdown from "vue-markdown";
 import DateFormat from "@/components/DateFormat";
+import GwGold from '@/components/GwGold';
 
 export default {
   name: "MemberProfile",
@@ -204,12 +208,14 @@ export default {
     GuildLogTable,
     DiscordAvatar,
     VueMarkdown,
-    DateFormat
+    DateFormat,
+    GwGold
   },
   data() {
     return {
       account: null,
       karma: 0,
+      totalGold: 0,
       discord: {},
       created: "",
       guilds: [],
@@ -241,6 +247,7 @@ export default {
         .getMember(this.account)
         .then(r => {
           this.karma = r.data.karma;
+          this.totalGold = r.data.totalGold;
           this.created = r.data.created;
           this.discord = r.data.discord;
           this.guilds = r.data.guilds;
