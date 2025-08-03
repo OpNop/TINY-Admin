@@ -162,7 +162,7 @@ export default {
       }
     },
     getUsername() {
-      return `${this.username}#${this.discriminator}`
+      return `${this.username}`
     },
     getAvatar() {
       if (this.username) {
