@@ -26,7 +26,7 @@ export default {
     message: {
       immediate: true,
       handler (message) {
-        let { type, user, invited_by, kicked_by, changed_by, new_rank, count, item_name, coins, operation } = message // destructuring iz fun
+        let { type, user, invited_by, kicked_by, changed_by, new_rank, count, item_name, coins, operation, state } = message // destructuring iz fun
         count = coins || count;
         if (type === 'joined') {
           this.messageInfo = {
@@ -67,6 +67,18 @@ export default {
             other: changed_by,
             is_coins: !!coins,
             count: count
+          }
+        }
+        else if (type === 'mission') {
+          if (['fail', 'success'].includes(state)) {
+            let result = state === 'fail' ? 'failed' : 'completed';
+            this.messageInfo = {
+              message: `Guild mission ${result}`
+            }
+          } else if (state === 'start') {
+            this.messageInfo = {
+              message: `Started a guild mission`
+            }
           }
         }
         this.messageInfo.user = user;
